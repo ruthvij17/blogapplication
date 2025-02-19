@@ -1,12 +1,14 @@
 import React from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import logo from "../assets/V.png";
 
 const NavbarComponent = () => {
   return (
     <>
       <div className="w-full h-20 p-3 mr-2 rounded-xl bg-black flex flex-row justify-between items-center text-white">
         <div className="logo flex flex-row gap-3.5 items-center">
+          <img src={logo} alt="logo" className="w-20 h-20" />
           <h2 class="text-transparent bg-clip-text bg-gradient-to-t uppercase text-shadow-white from-black to-white text-3xl font-extrabold">
             blogverse
           </h2>
