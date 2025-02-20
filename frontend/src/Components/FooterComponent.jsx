@@ -14,7 +14,7 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 
 const AppFooter = () => {
   return (
-    <div className="w-full bg-black py-10 rounded-xl">
+    <div className="w-[98%] bg-black py-10 rounded-xl m-2">
       {/* Top Section */}
       {/* <div className="w-full flex flex-col lg:flex-row items-center text-white gap-6 lg:gap-3 px-5 lg:px-32">
         <GiBarracksTent fontSize={50} />

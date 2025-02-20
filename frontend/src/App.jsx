@@ -9,6 +9,7 @@ import LoginPage from "./Pages/LoginPage";
 import SigninPage from "./Pages/SigninPage";
 import BlogPage from "./Pages/BlogPage";
 import AddBlogPage from "./Pages/AddBlogPage";
+import ProfilePage from "./Pages/ProfilePage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/signin" element={<SigninPage />}></Route>
       <Route path="/blog/:id" element={<BlogPage />}></Route>
       <Route path="/add/blog" element={<AddBlogPage />}></Route>
+      <Route path="/profile" element={<ProfilePage />}></Route>
     </Routes>
   );
 }

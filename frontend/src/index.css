@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 body {
-  padding: 5px;
   margin: 0; /* Optional: Removes default body margin */
+  width: 100vw;
+  overflow-x: hidden;
 }
