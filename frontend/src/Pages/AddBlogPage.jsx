@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdLibraryAdd } from "react-icons/md";
 import { BiSolidImageAdd } from "react-icons/bi";
 import { MdDescription } from "react-icons/md";
@@ -9,20 +9,21 @@ const AddBlogPage = () => {
   const [inputs, setInputs] = useState([]);
   const [inputType, setInputType] = useState("text");
 
-  const addInput = () => {
-    setInputs([...inputs, ""]);
+  const addInput = (type) => {
+    setInputType(type);
+    setInputs([...inputs, { type, content: "" }]);
   };
 
   const handleInputChange = (index, event) => {
     const newInputs = [...inputs];
-    newInputs[index] = event.target.value; // Update the value of the textbox at the given index
+    newInputs[index].content = event.target.value; // Update the value of the textbox at the given index
     setInputs(newInputs);
   };
 
-  const handleButtonClick = (type) => {
-    setInputType(type); // Update input type based on the button clicked
-    addInput();
-  };
+  // const handleButtonClick = (type) => {
+  //   setInputType(type); // Update input type based on the button clicked
+  //   addInput();
+  // };
   return (
     <>
       <div className="flex flex-row min-h-screen w-screen items-center justify-between bg-white text-white p-3">
@@ -45,17 +46,34 @@ const AddBlogPage = () => {
               className="border-2 border-white rounded-sm px-2 py-1 text-xl outline-none bg-transparent placeholder:text-gray-400"
             ></textarea>
             {inputs &&
-              inputs.map((input, index) => (
-                <div key={index} className="flex flex-col">
-                  <label>Textbox {index + 1}</label>
-                  <input
-                    type={inputType}
-                    value={input}
-                    onChange={(e) => handleInputChange(index, e)}
-                    className="border-2 border-white rounded-sm px-2 py-1 text-xl outline-none bg-transparent placeholder:text-gray-400"
-                  />
-                </div>
-              ))}
+              inputs.map((input, index) => {
+                if (input.type === "desc") {
+                  return (
+                    <div key={index} className="flex flex-col">
+                      <label>Description</label>
+                      <textarea
+                        value={input.content}
+                        onChange={(e) => handleInputChange(index, e)}
+                        className="border-2 border-white rounded-sm px-2 py-1 text-xl outline-none bg-transparent placeholder:text-gray-400"
+                      ></textarea>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={index} className="flex flex-col">
+                      <label>
+                        {input.type === "text" ? "Title" : "Image URL"}
+                      </label>
+                      <input
+                        type={input.type}
+                        value={input.content}
+                        onChange={(e) => handleInputChange(index, e)}
+                        className="border-2 border-white rounded-sm px-2 py-1 text-xl outline-none bg-transparent placeholder:text-gray-400"
+                      />
+                    </div>
+                  );
+                }
+              })}
             <center>
               <button
                 type="submit"
@@ -69,20 +87,20 @@ const AddBlogPage = () => {
         </div>
         <div className="sticky right-3 bottom-0 top-0 bg-black flex flex-col p-2 w-[10%] h-[95vh] justify-around rounded-xl">
           <button
-            onClick={() => handleButtonClick("text")}
+            onClick={() => addInput("text")}
             className="cursor-pointer border-2 border-white rounded-sm active:bg-[rgb(60,60,228)] flex items-center justify-center"
           >
             <MdLibraryAdd /> Add Title
           </button>
           <button
-            onClick={() => handleButtonClick("url")}
+            onClick={() => addInput("url")}
             className="cursor-pointer border-2 border-white rounded-sm active:bg-[rgb(60,60,228)] flex items-center justify-center"
           >
             <BiSolidImageAdd />
             Add Image
           </button>
           <button
-            onClick={() => handleButtonClick("text")}
+            onClick={() => addInput("desc")}
             className="cursor-pointer border-2 border-white rounded-sm active:bg-[rgb(60,60,228)] flex items-center justify-center"
           >
             <MdDescription className="text-3xl" />
