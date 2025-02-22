@@ -7,10 +7,8 @@ import DefaultLayout from "../Layouts/DefaultLayout";
 
 const AddBlogPage = () => {
   const [inputs, setInputs] = useState([]);
-  const [inputType, setInputType] = useState("text");
 
   const addInput = (type) => {
-    setInputType(type);
     setInputs([...inputs, { type, content: "" }]);
   };
 
@@ -20,10 +18,12 @@ const AddBlogPage = () => {
     setInputs(newInputs);
   };
 
-  // const handleButtonClick = (type) => {
-  //   setInputType(type); // Update input type based on the button clicked
-  //   addInput();
-  // };
+  const handleDelete = (index) => {
+    const newInputs = [...inputs];
+    newInputs.splice(index, 1);
+    setInputs(newInputs);
+  };
+
   return (
     <>
       <div className="flex flex-row min-h-screen w-screen items-center justify-between bg-white text-white p-3">
@@ -36,40 +36,70 @@ const AddBlogPage = () => {
             <input
               type="text"
               name="title"
+              placeholder="Enter the title of the blog"
               required
-              className="border-2 border-white rounded-sm px-2 py-1 text-xl outline-none bg-transparent placeholder:text-gray-400"
+              className="border-2 border-white rounded-sm px-2 py-1 text-xl outline-none bg-transparent placeholder:text-[rgba(255,255,255,0.2)]"
             />
             <label htmlFor="Intro">About:</label>
             <textarea
               name="Intro"
+              placeholder="Enter the brief description about the blog"
               required
-              className="border-2 border-white rounded-sm px-2 py-1 text-xl outline-none bg-transparent placeholder:text-gray-400"
+              className="border-2 border-white rounded-sm px-2 py-1 outline-none bg-transparent placeholder:text-[rgba(255,255,255,0.2)]"
             ></textarea>
+            <label htmlFor="image">Poster Image:</label>
+            <input
+              type="url"
+              name="image"
+              placeholder="Enter the url for the poster image "
+              className="border-2 border-white rounded-sm px-2 py-1 outline-none bg-transparent placeholder:text-[rgba(255,255,255,0.2)]"
+            />
+            <br />
+            <hr />
+            <br />
             {inputs &&
               inputs.map((input, index) => {
                 if (input.type === "desc") {
                   return (
                     <div key={index} className="flex flex-col">
-                      <label>Description</label>
-                      <textarea
-                        value={input.content}
-                        onChange={(e) => handleInputChange(index, e)}
-                        className="border-2 border-white rounded-sm px-2 py-1 text-xl outline-none bg-transparent placeholder:text-gray-400"
-                      ></textarea>
+                      <label>Description:</label>
+                      <div className="w-full flex justify-between items-center">
+                        <textarea
+                          required
+                          value={input.content}
+                          onChange={(e) => handleInputChange(index, e)}
+                          className="border-2 w-[95%] border-white rounded-sm px-2 py-1 outline-none bg-transparent"
+                        ></textarea>
+                        <div
+                          className="w-[30px] h-[30px] rounded-sm border border-red-700 flex items-center justify-center active:bg-red-700 cursor-pointer"
+                          onClick={() => handleDelete(index)}
+                        >
+                          X
+                        </div>
+                      </div>
                     </div>
                   );
                 } else {
                   return (
                     <div key={index} className="flex flex-col">
                       <label>
-                        {input.type === "text" ? "Title" : "Image URL"}
+                        {input.type === "text" ? "Title:" : "Image URL:"}
                       </label>
-                      <input
-                        type={input.type}
-                        value={input.content}
-                        onChange={(e) => handleInputChange(index, e)}
-                        className="border-2 border-white rounded-sm px-2 py-1 text-xl outline-none bg-transparent placeholder:text-gray-400"
-                      />
+                      <div className="w-full flex justify-between items-center">
+                        <input
+                          required
+                          type={input.type}
+                          value={input.content}
+                          onChange={(e) => handleInputChange(index, e)}
+                          className="border-2 w-[95%] border-white rounded-sm px-2 py-1 outline-none bg-transparent"
+                        />
+                        <div
+                          className="w-[30px] h-[30px] rounded-sm border border-red-700 flex items-center justify-center active:bg-red-700 cursor-pointer"
+                          onClick={() => handleDelete(index)}
+                        >
+                          X
+                        </div>
+                      </div>
                     </div>
                   );
                 }
@@ -85,23 +115,23 @@ const AddBlogPage = () => {
             </center>
           </form>
         </div>
-        <div className="sticky right-3 bottom-0 top-0 bg-black flex flex-col p-2 w-[10%] h-[95vh] justify-around rounded-xl">
+        <div className="border-[rgb(60,60,228)] border-2 sticky right-3 bottom-0 top-0 bg-black flex flex-col p-2 w-[10%] h-[95vh] justify-around rounded-xl">
           <button
             onClick={() => addInput("text")}
-            className="cursor-pointer border-2 border-white rounded-sm active:bg-[rgb(60,60,228)] flex items-center justify-center"
+            className="cursor-pointer border-2 border-[rgb(60,60,228)] rounded-sm active:bg-[rgb(60,60,228)] flex items-center justify-center"
           >
             <MdLibraryAdd /> Add Title
           </button>
           <button
             onClick={() => addInput("url")}
-            className="cursor-pointer border-2 border-white rounded-sm active:bg-[rgb(60,60,228)] flex items-center justify-center"
+            className="cursor-pointer border-2 border-[rgb(60,60,228)] rounded-sm active:bg-[rgb(60,60,228)] flex items-center justify-center"
           >
             <BiSolidImageAdd />
             Add Image
           </button>
           <button
             onClick={() => addInput("desc")}
-            className="cursor-pointer border-2 border-white rounded-sm active:bg-[rgb(60,60,228)] flex items-center justify-center"
+            className="cursor-pointer border-2 border-[rgb(60,60,228)] rounded-sm active:bg-[rgb(60,60,228)] flex items-center justify-center"
           >
             <MdDescription className="text-3xl" />
             Add Description

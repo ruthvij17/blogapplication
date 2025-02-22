@@ -12,14 +12,21 @@ import AddBlogPage from "./Pages/AddBlogPage";
 import ProfilePage from "./Pages/ProfilePage";
 
 function App() {
+  const [loggedInUser, setLoggedInUser] = useState({});
   return (
     <Routes>
       <Route path="/" element={<HomePage />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
       <Route path="/signin" element={<SigninPage />}></Route>
       <Route path="/blog/:id" element={<BlogPage />}></Route>
-      <Route path="/add/blog" element={<AddBlogPage />}></Route>
-      <Route path="/profile" element={<ProfilePage />}></Route>
+      <Route
+        path="/add/blog"
+        element={loggedInUser ? <AddBlogPage /> : <LoginPage />}
+      ></Route>
+      <Route
+        path="/profile"
+        element={loggedInUser ? <ProfilePage /> : <LoginPage />}
+      ></Route>
     </Routes>
   );
 }
