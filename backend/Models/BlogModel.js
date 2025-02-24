@@ -7,13 +7,36 @@ const blogSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      required: true,
+    },
     about: {
       type: String,
       required: true,
     },
-    posterimage: {
+    posterImage: {
       type: String,
-      required: true,
+      required: false,
+    },
+    data: {
+      type: [
+        {
+          type: {
+            type: String,
+            required: true,
+          },
+          content: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
+      required: false,
+    },
+    views: {
+      type: Number,
+      required: false,
     },
     likes: {
       type: Number,
@@ -31,9 +54,6 @@ const blogSchema = mongoose.Schema(
             required: true,
           },
         },
-        {
-          timestamps: true,
-        },
       ],
       required: false,
     },
@@ -42,3 +62,5 @@ const blogSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+module.exports = mongoose.model("Blogs", blogSchema);
