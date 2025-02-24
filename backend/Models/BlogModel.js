@@ -15,6 +15,25 @@ const blogSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    likes: {
+      type: Number,
+      required: false,
+    },
+    comments: {
+      type: [
+        {
+          email: {
+            type: String,
+            required: true,
+          },
+          comment: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
+      required: false,
+    },
   },
   {
     timestamps: true,
