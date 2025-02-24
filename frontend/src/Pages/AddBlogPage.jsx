@@ -40,6 +40,43 @@ const AddBlogPage = () => {
               required
               className="border-2 border-white rounded-sm px-2 py-1 text-xl outline-none bg-transparent placeholder:text-[rgba(255,255,255,0.2)]"
             />
+            <label for="select-option" class="text-white mb-2">
+              Category:
+            </label>
+            <select
+              name=""
+              id=""
+              className="bg-black text-white border-2 border-white rounded-md p-2"
+              required
+            >
+              <option
+                value=""
+                className="text-[rgba(255,255,255,0.2)]"
+                disabled
+                selected
+              >
+                Select an option
+              </option>
+              <option value="" className="text-white">
+                Sports
+              </option>
+              <option value="" className="text-white">
+                Food
+              </option>
+              <option value="" className="text-white">
+                Lifestyle
+              </option>
+              <option value="" className="text-white">
+                Health
+              </option>
+              <option value="" className="text-white">
+                Fashion
+              </option>
+              <option value="" className="text-white">
+                Technology
+              </option>
+            </select>
+
             <label htmlFor="Intro">About:</label>
             <textarea
               name="Intro"

@@ -51,31 +51,37 @@ const AppFooter = () => {
       <div className="flex flex-col gap-3 text-gray-500 px-5 lg:px-32 py-10 text-center lg:text-left">
         <h2 className="text-gray-300">COUNTRIES WE DELIVER OUR SERVICE</h2>
         <p className="text-sm lg:text-base">
-          <span className="hover:text-white">India</span> |
-          <span className="hover:text-white"> Indonesia</span> |
-          <span className="hover:text-white"> Singapore</span> |
-          <span className="hover:text-white"> UAE</span> |
-          <span className="hover:text-white"> Sri Lanka</span> |
-          <span className="hover:text-white"> West Indies</span>
+          <span className="hover:text-white cursor-pointer">India</span>|
+          <span className="hover:text-white cursor-pointer"> Indonesia</span> |
+          <span className="hover:text-white cursor-pointer"> Singapore</span> |
+          <span className="hover:text-white cursor-pointer"> UAE</span> |
+          <span className="hover:text-white cursor-pointer"> Sri Lanka</span> |
+          <span className="hover:text-white cursor-pointer"> West Indies</span>
         </p>
         <h2 className="text-gray-300">Help</h2>
         <p className="text-sm lg:text-base">
-          <span className="hover:text-white">About Us</span> |
-          <span className="hover:text-white"> Contact Us</span> |
-          <span className="hover:text-white"> Site Map</span> |
-          <span className="hover:text-white"> FAQs</span> |
-          <span className="hover:text-white"> Terms and Conditions</span> |
-          <span className="hover:text-white"> Privacy Policy</span>
+          <span className="hover:text-white cursor-pointer">About Us</span> |
+          <span className="hover:text-white cursor-pointer "> Contact Us</span>{" "}
+          |<span className="hover:text-white cursor-pointer"> Site Map</span> |
+          <span className="hover:text-white cursor-pointer"> FAQs</span> |
+          <span className="hover:text-white cursor-pointer">
+            {" "}
+            Terms and Conditions
+          </span>{" "}
+          |
+          <span className="hover:text-white cursor-pointer">
+            {" "}
+            Privacy Policy
+          </span>
         </p>
         <h2 className="text-gray-300">BLOGVERSE EXCLUSIVES</h2>
         <p className="text-sm lg:text-base">
-          <span className="hover:text-white">Vintage</span> |
-          <span className="hover:text-white"> Classic</span> |
-          <span className="hover:text-white"> Modern</span> |
-          <span className="hover:text-white"> Village Aesthetics</span> |
-          <span className="hover:text-white"> Gift Cards</span> |
-          <span className="hover:text-white"> Designs</span> |
-          <span className="hover:text-white"> Offers</span>
+          <span className="hover:text-white cursor-pointer">Sports</span> |
+          <span className="hover:text-white cursor-pointer"> Food</span> |
+          <span className="hover:text-white cursor-pointer"> Lifestyle</span> |
+          <span className="hover:text-white cursor-pointer"> Health</span> |
+          <span className="hover:text-white cursor-pointer"> Fashion</span> |
+          <span className="hover:text-white cursor-pointer"> Technology</span> |
         </p>
       </div>
 
