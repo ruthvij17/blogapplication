@@ -24,6 +24,10 @@ const AddBlogPage = () => {
     setInputs(newInputs);
   };
 
+  useEffect(() => {
+    console.log(inputs);
+  }, [inputs]);
+
   return (
     <>
       <div className="flex flex-row min-h-screen w-screen items-center justify-between bg-white text-white p-3">
