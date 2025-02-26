@@ -5,7 +5,8 @@ const Poster = (props) => {
   return (
     <Link to={`/blog/nubb`}>
       <div
-        className={`flex flex-col items-start gap-2 px-1 py-3 rounded-lg m-2 ${
+        id="scrollbar"
+        className={`h-[45vh] flex flex-col items-start gap-2 px-1 py-3 rounded-lg m-2 overflow-auto ${
           props.isDark ? "bg-white/20" : "bg-black/15"
         }`}
       >

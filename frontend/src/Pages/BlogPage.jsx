@@ -3,11 +3,12 @@ import DefaultLayout from "../Layouts/DefaultLayout";
 
 const BlogPage = () => {
   const blog = {
-    title: "Virat Kohli",
+    title: "Virat Kohli hii nann hesru chandan shetty yantha madudh iga ",
     category: "Sports",
-    about: "Harsha is doing something",
+    about:
+      "Virat Kohli is an Indian cricketer widely regarded as one of the best batsmen of his generation. Born on November 5, 1988, in Delhi, India, he is known for his aggressive playing style, exceptional batting technique, and remarkable consistency. Kohli has broken numerous cricketing records, including being one of the fastest to reach milestones in One Day Internationals (ODIs) and T20s. He served as the captain of the Indian cricket team, leading them to significant victories. Kohli has received numerous awards, including the prestigious ICC Player of the Year and the Padma Shri. His leadership, alongside his individual achievements, has solidified his place among the game's greats.",
     posterImage:
-      "https://images.mykhel.com/webp/images/cricket/players/8/3788.jpg",
+      "https://cricinformer.com/wp-content/uploads/2023/07/cover-virat-kohli.png",
     data: [
       {
         type: "text",
@@ -15,11 +16,13 @@ const BlogPage = () => {
       },
       {
         type: "url",
-        content: "https://www.example.com/images/image1.jpg",
+        content:
+          "https://cricinformer.com/wp-content/uploads/2023/07/cover-virat-kohli.png",
       },
       {
         type: "desc",
-        content: "qefiyfe",
+        content:
+          "Virat Kohli is an Indian cricketer widely regarded as one of the best batsmen of his generation. Born on November 5, 1988, in Delhi, India, he is known for his aggressive playing style, exceptional batting technique, and remarkable consistency. Kohli has broken numerous cricketing records, including being one of the fastest to reach milestones in One Day Internationals (ODIs) and T20s. He served as the captain of the Indian cricket team, leading them to significant victories. Kohli has received numerous awards, including the prestigious ICC Player of the Year and the Padma Shri. His leadership, alongside his individual achievements, has solidified his place among the game's greats.",
       },
       {
         type: "text",
@@ -27,7 +30,37 @@ const BlogPage = () => {
       },
       {
         type: "desc",
-        content: "wjfyqfeuq",
+        content:
+          "Virat Kohli is an Indian cricketer widely regarded as one of the best batsmen of his generation. Born on November 5, 1988, in Delhi, India, he is known for his aggressive playing style, exceptional batting technique, and remarkable consistency. Kohli has broken numerous cricketing records, including being one of the fastest to reach milestones in One Day Internationals (ODIs) and T20s. He served as the captain of the Indian cricket team, leading them to significant victories. Kohli has received numerous awards, including the prestigious ICC Player of the Year and the Padma Shri. His leadership, alongside his individual achievements, has solidified his place among the game's greats.",
+      },
+      {
+        type: "url",
+        content:
+          "https://cricinformer.com/wp-content/uploads/2023/07/cover-virat-kohli.png",
+      },
+      {
+        type: "desc",
+        content:
+          "Virat Kohli is an Indian cricketer widely regarded as one of the best batsmen of his generation. Born on November 5, 1988, in Delhi, India, he is known for his aggressive playing style, exceptional batting technique, and remarkable consistency. Kohli has broken numerous cricketing records, including being one of the fastest to reach milestones in One Day Internationals (ODIs) and T20s. He served as the captain of the Indian cricket team, leading them to significant victories. Kohli has received numerous awards, including the prestigious ICC Player of the Year and the Padma Shri. His leadership, alongside his individual achievements, has solidified his place among the game's greats.",
+      },
+      {
+        type: "text",
+        content: "weyfifud",
+      },
+      {
+        type: "url",
+        content:
+          "https://cricinformer.com/wp-content/uploads/2023/07/cover-virat-kohli.png",
+      },
+      {
+        type: "url",
+        content:
+          "https://cricinformer.com/wp-content/uploads/2023/07/cover-virat-kohli.png",
+      },
+      {
+        type: "url",
+        content:
+          "https://cricinformer.com/wp-content/uploads/2023/07/cover-virat-kohli.png",
       },
     ],
   };
@@ -42,7 +75,7 @@ const BlogPage = () => {
           }}
         >
           <div className="absolute z-30 left-10 top-5 flex items-center gap-10">
-            <div className="h-[82vh] max-w-[60vw]">
+            <div className="h-[82vh] max-w-[60vw] min-w-fit">
               <img
                 src={blog.posterImage}
                 alt="poster movie"
@@ -50,14 +83,15 @@ const BlogPage = () => {
               />
             </div>
             <div className="flex flex-col gap-3">
-              <div className="flex flex-col gap-3 px-4 my-3">
+              <div
+                id="scrollbar"
+                className="max-h-[70vh] text-white flex flex-col gap-2 md:px-4 overflow-auto"
+              >
                 <h1 className="text-white font-extrabold text-5xl">
                   {blog.title}
                 </h1>
-                <div className="text-white flex flex-col gap-2 md:px-4">
-                  <h4>{blog.about}</h4>
-                  <h4>{blog.category}</h4>
-                </div>
+                <h4>{blog.about}</h4>
+                <h4>{blog.category}</h4>
               </div>
             </div>
           </div>
@@ -65,8 +99,37 @@ const BlogPage = () => {
         <img
           src={blog.posterImage}
           alt="Movie Backdrop poster"
-          className="w-[99%] h-[90vh] object-cover object-center"
+          className="w-[99%] h-[90vh] object-cover object-center rounded-lg"
         />
+      </div>
+
+      <div className="m-2 font-serif">
+        {blog.data.map((ele) => {
+          if (ele.type == "text") {
+            return (
+              <div className="">
+                <h1 className="font-bold text-3xl underline">{ele.content}</h1>
+              </div>
+            );
+          } else if (ele.type == "url") {
+            return (
+              <div className="h-[60vh] overflow-hidden flex justify-center mb-2">
+                <img
+                  src={ele.content}
+                  alt="invalid url"
+                  className="h-full rounded-lg"
+                />
+              </div>
+            );
+          } else if (ele.type == "desc") {
+            return (
+              <>
+                <p className="indent-8">{ele.content}</p>
+                <br />
+              </>
+            );
+          }
+        })}
       </div>
     </>
   );

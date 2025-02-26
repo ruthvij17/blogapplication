@@ -24,7 +24,8 @@ const HomePage = () => {
     {
       title: "Something",
       category: "Sports",
-      about: "Harsha is doing something",
+      about:
+        "Virat Kohli is an Indian cricketer widely regarded as one of the best batsmen of his generation. Born on November 5, 1988, in Delhi, India, he is known for his aggressive playing style, exceptional batting technique, and remarkable consistency. Kohli has broken numerous cricketing records, including being one of the fastest to reach milestones in One Day Internationals (ODIs) and T20s. He served as the captain of the Indian cricket team, leading them to significant victories. Kohli has received numerous awards, including the prestigious ICC Player of the Year and the Padma Shri. His leadership, alongside his individual achievements, has solidified his place among the game's greats.",
       posterImage: "https://www.w3schools.com/w3images/lights.jpg",
       data: [
         {

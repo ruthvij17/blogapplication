@@ -15,3 +15,7 @@ body {
   right: 3% !important;
   z-index: 1;
 }
+
+#scrollbar::-webkit-scrollbar {
+  display: none;
+}
