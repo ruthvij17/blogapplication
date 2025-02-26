@@ -6,7 +6,7 @@ import logo from "../assets/V.png";
 const NavbarComponent = () => {
   return (
     <>
-      <div className="w-[98%] h-20 p-3 m-2 rounded-xl bg-black flex flex-row justify-between items-center text-white">
+      <div className="w-[98%] h-20 p-3 mx-2 my-1 rounded-lg bg-black flex flex-row justify-between items-center text-white">
         <div className="logo flex flex-row gap-3.5 items-center">
           <Link to="/">
             <img src={logo} alt="logo" className="w-20 h-20" />

@@ -5,8 +5,8 @@ const Poster = (props) => {
   return (
     <Link to={`/blog/nubb`}>
       <div
-        className={`flex flex-col items-start gap-2 border-2 px-1 py-3 rounded-lg m-2 ${
-          props.isDark ? "border-white" : "border-black"
+        className={`flex flex-col items-start gap-2 px-1 py-3 rounded-lg m-2 ${
+          props.isDark ? "bg-white/20" : "bg-black/15"
         }`}
       >
         <div className="p-2 w-full">
@@ -17,16 +17,25 @@ const Poster = (props) => {
                 : "https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png"
             }
             alt="post"
-            className="w-full rounded-md h-40 border border-white"
+            className={`w-full rounded-md h-40 border object-cover ${
+              props.isDark ? "border-white" : "border-black"
+            }`}
           />
+
           <h3
             className={`text-lg font-bold ${
-              props.isDark ? "text-white" : "text-gray-700"
+              props.isDark ? "text-white" : "text-black"
             }`}
           >
             {props.title}
           </h3>
-          <p className="text-white/50 text-[10px]">{props.about}</p>
+          <p
+            className={`text-[10px] ${
+              props.isDark ? "text-white/50" : "text-black/50"
+            }`}
+          >
+            {props.about}
+          </p>
         </div>
       </div>
     </Link>

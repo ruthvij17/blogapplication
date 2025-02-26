@@ -3,6 +3,7 @@ import DefaultLayout from "../Layouts/DefaultLayout";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import Poster from "../Components/PosterComponent";
 import PosterSlider from "../Components/PosterSliderComponent";
+import HeroCarousel from "../Components/HeroCarouselComponent";
 
 const HomePage = () => {
   const [category, setCategory] = useState("All");
@@ -324,12 +325,22 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="container px-4 flex flex-col gap-3 bg-black w-[98%] mx-2 rounded-lg mt-2">
-        <div className="flex flex-col items-start sm:ml-3 my-2 bg-black">
+      <HeroCarousel />
+
+      <div className="container px-4 flex flex-col gap-3 bg-black w-[98%] mx-2 rounded-lg pb-1">
+        <div className="flex flex-col items-start sm:ml-3 mt-2 bg-black">
           <h3 className={`text-2xl font-bold text-white`}>Trending</h3>
           <p className={`text-sm text-white`}>Most popular</p>
         </div>
         <PosterSlider blogs={blogs} isDark="true" />
+      </div>
+
+      <div className="container px-4 flex flex-col gap-3 bg-black/15 w-[98%] mx-2 rounded-lg mt-2 pb-1">
+        <div className="flex flex-col items-start sm:ml-3 mt-2">
+          <h3 className={`text-2xl font-bold text-black`}>Suggested</h3>
+          <p className={`text-sm text-black`}>Suggested for you</p>
+        </div>
+        <PosterSlider blogs={blogs} isDark={false} />
       </div>
     </>
   );
