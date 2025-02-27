@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const dbConnection = require("./dbconnection");
 const dotenv = require("dotenv").config();
-//const cors = require("cors");
+const cors = require("cors");
 const UserModel = require("./Models/UserModel");
 const BlogModel = require("./Models/BlogModel");
 
@@ -10,7 +10,7 @@ dbConnection();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-//app.use(cors());
+app.use(cors());
 
 app.get("/", (req, res) => {
   try {

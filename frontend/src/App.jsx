@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect } from "react";
 import "./App.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,22 +10,31 @@ import SigninPage from "./Pages/SigninPage";
 import BlogPage from "./Pages/BlogPage";
 import AddBlogPage from "./Pages/AddBlogPage";
 import ProfilePage from "./Pages/ProfilePage";
+import axios from "axios";
+import { UserContext } from "./Context/UserContext";
+
+axios.defaults.baseURL = "http://localhost:5000";
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState({});
+  // const [loggedInUser, setLoggedInUser] = useState();
+  const { user, setUser } = useContext(UserContext);
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   return (
     <Routes>
       <Route path="/" element={<HomePage />}></Route>
+      <Route path="/:id" element={user ? <HomePage /> : <LoginPage />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
       <Route path="/signin" element={<SigninPage />}></Route>
       <Route path="/blog/:id" element={<BlogPage />}></Route>
       <Route
         path="/add/blog"
-        element={loggedInUser ? <AddBlogPage /> : <LoginPage />}
+        element={user ? <AddBlogPage /> : <LoginPage />}
       ></Route>
       <Route
         path="/profile"
-        element={loggedInUser ? <ProfilePage /> : <LoginPage />}
+        element={user ? <ProfilePage /> : <LoginPage />}
       ></Route>
     </Routes>
   );

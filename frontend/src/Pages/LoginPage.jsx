@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -15,9 +17,10 @@ const LoginPage = () => {
         password: password,
       });
       if (response.status == 200) {
-        navigate(`/home/${response.data.user._id}`, {
-          state: { data: response.data.user },
-        });
+        // props.setLoggedInUser(response.data.user);
+        setUser(response.data.user);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        navigate(`/${response.data.user._id}`);
       } else alert(response.data.message);
     } catch (error) {
       alert("Error occurred during login");

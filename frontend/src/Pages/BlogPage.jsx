@@ -7,8 +7,7 @@ const BlogPage = () => {
     category: "Sports",
     about:
       "Virat Kohli is an Indian cricketer widely regarded as one of the best batsmen of his generation. Born on November 5, 1988, in Delhi, India, he is known for his aggressive playing style, exceptional batting technique, and remarkable consistency. Kohli has broken numerous cricketing records, including being one of the fastest to reach milestones in One Day Internationals (ODIs) and T20s. He served as the captain of the Indian cricket team, leading them to significant victories. Kohli has received numerous awards, including the prestigious ICC Player of the Year and the Padma Shri. His leadership, alongside his individual achievements, has solidified his place among the game's greats.",
-    posterImage:
-      "https://cricinformer.com/wp-content/uploads/2023/07/cover-virat-kohli.png",
+    posterImage: "https://documents.iplt20.com/ipl/IPLHeadshot2024/2.png",
     data: [
       {
         type: "text",
@@ -85,13 +84,12 @@ const BlogPage = () => {
             <div className="flex flex-col gap-3">
               <div
                 id="scrollbar"
-                className="max-h-[70vh] text-white flex flex-col gap-2 md:px-4 overflow-auto"
+                className="text-white max-h-[70vh] flex flex-col gap-2 md:px-4 overflow-auto"
               >
-                <h1 className="text-white font-extrabold text-5xl">
+                <h1 className="text-white font-extrabold text-5xl uppercase">
                   {blog.title}
                 </h1>
                 <h4>{blog.about}</h4>
-                <h4>{blog.category}</h4>
               </div>
             </div>
           </div>
