@@ -4,7 +4,6 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import Poster from "../Components/PosterComponent";
 import PosterSlider from "../Components/PosterSliderComponent";
 import HeroCarousel from "../Components/HeroCarouselComponent";
-import { useNavigate } from "react-router";
 import { UserContext } from "../Context/UserContext";
 
 const HomePage = () => {
@@ -23,13 +22,11 @@ const HomePage = () => {
     "Fashion",
     "Technology",
   ];
-  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     if (userData) {
       setUser(userData);
-      navigate(`/${userData._id}`);
     }
   }, []);
 

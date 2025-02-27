@@ -19,7 +19,7 @@ const SigninPage = () => {
     try {
       const response = await axios.post("/sign-in", { email, password, name });
       if (response.status == 200) {
-        navigate(`/`);
+        navigate("/login");
       } else {
         console.log(response.data.message);
         alert(response.data.message);

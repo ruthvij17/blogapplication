@@ -24,7 +24,6 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />}></Route>
-      <Route path="/:id" element={user ? <HomePage /> : <LoginPage />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
       <Route path="/signin" element={<SigninPage />}></Route>
       <Route path="/blog/:id" element={<BlogPage />}></Route>

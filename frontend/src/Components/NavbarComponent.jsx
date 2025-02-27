@@ -3,6 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/V.png";
 import { UserContext } from "../Context/UserContext";
+import { CgProfile } from "react-icons/cg";
 
 const NavbarComponent = () => {
   const { user, setUser } = useContext(UserContext);
@@ -30,7 +31,15 @@ const NavbarComponent = () => {
           </div>
         </div>
         {user ? (
-          <div>
+          <div className="flex flex-row gap-4 items-center">
+            <Link to="/profile">
+              <CgProfile className="text-4xl " />
+            </Link>
+            <Link to="/add/blog">
+              <div className="rounded-lg border-[1px] border-amber-50 p-3 hover:bg-[rgba(240,240,240,0.6)] active:bg-black">
+                Add blog
+              </div>
+            </Link>
             <button
               onClick={() => handleLogout()}
               className="rounded-lg border-[1px] border-amber-50 p-3 hover:bg-[rgba(240,240,240,0.6)] active:bg-black"

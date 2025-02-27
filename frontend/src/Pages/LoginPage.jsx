@@ -19,7 +19,7 @@ const LoginPage = () => {
       if (response.status == 200) {
         setUser(response.data.user);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        navigate(`/${response.data.user._id}`);
+        navigate("/");
       } else alert(response.data.message);
     } catch (error) {
       alert("Error occurred during login");

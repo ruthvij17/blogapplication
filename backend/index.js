@@ -78,7 +78,10 @@ app.post("/post/blog", async (req, res) => {
       data,
     });
 
-    res.status(200).json(blogData);
+    res.status(200).json({
+      success: true,
+      message: "Blog added successfully",
+    });
   } catch (error) {
     console.log(error.message);
   }

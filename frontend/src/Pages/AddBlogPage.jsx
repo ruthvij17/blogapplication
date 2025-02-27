@@ -4,8 +4,14 @@ import { BiSolidImageAdd } from "react-icons/bi";
 import { MdDescription } from "react-icons/md";
 import { BsFillSendFill } from "react-icons/bs";
 import DefaultLayout from "../Layouts/DefaultLayout";
+import axios from "axios";
 
 const AddBlogPage = () => {
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [about, setAbout] = useState("");
+  const [posterImage, setPosterImage] = useState("");
+
   const [inputs, setInputs] = useState([]);
 
   const addInput = (type) => {
@@ -24,9 +30,23 @@ const AddBlogPage = () => {
     setInputs(newInputs);
   };
 
-  useEffect(() => {
-    console.log(inputs);
-  }, [inputs]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/post/blog", {
+        title,
+        category,
+        about,
+        posterImage,
+        data: inputs,
+      });
+      if (response.status == 200) {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <>
@@ -40,18 +60,19 @@ const AddBlogPage = () => {
             <input
               type="text"
               name="title"
+              value={title}
               placeholder="Enter the title of the blog"
               required
+              onChange={(e) => setTitle(e.target.value)}
               className="border-2 border-white rounded-sm px-2 py-1 text-xl outline-none bg-transparent placeholder:text-[rgba(255,255,255,0.2)]"
             />
             <label for="select-option" class="text-white mb-2">
               Category:
             </label>
             <select
-              name=""
-              id=""
               className="bg-black text-white border-2 border-white rounded-md p-2"
               required
+              onChange={(e) => setCategory(e.target.value)}
             >
               <option
                 value=""
@@ -61,38 +82,45 @@ const AddBlogPage = () => {
               >
                 Select an option
               </option>
-              <option value="" className="text-white">
+              <option value="sports" className="text-white">
                 Sports
               </option>
-              <option value="" className="text-white">
+              <option value="food" className="text-white">
                 Food
               </option>
-              <option value="" className="text-white">
+              <option value="lifestyle" className="text-white">
                 Lifestyle
               </option>
-              <option value="" className="text-white">
+              <option value="health" className="text-white">
                 Health
               </option>
-              <option value="" className="text-white">
+              <option value="fashion" className="text-white">
                 Fashion
               </option>
-              <option value="" className="text-white">
+              <option value="technology" className="text-white">
                 Technology
+              </option>
+              <option value="others" className="text-white">
+                Others
               </option>
             </select>
 
             <label htmlFor="Intro">About:</label>
             <textarea
               name="Intro"
+              value={about}
               placeholder="Enter the brief description about the blog"
               required
+              onChange={(e) => setAbout(e.target.value)}
               className="border-2 border-white rounded-sm px-2 py-1 outline-none bg-transparent placeholder:text-[rgba(255,255,255,0.2)]"
             ></textarea>
             <label htmlFor="image">Poster Image:</label>
             <input
               type="url"
               name="image"
+              value={posterImage}
               placeholder="Enter the url for the poster image "
+              onChange={(e) => setPosterImage(e.target.value)}
               className="border-2 border-white rounded-sm px-2 py-1 outline-none bg-transparent placeholder:text-[rgba(255,255,255,0.2)]"
             />
             <br />
@@ -147,6 +175,9 @@ const AddBlogPage = () => {
               })}
             <center>
               <button
+                onClick={(e) => {
+                  handleSubmit(e);
+                }}
                 type="submit"
                 className="border-2 border-none rounded-sm px-5 py-3 mt-5 text-xl bg-[rgb(66,63,228)] text-white hover:bg-[rgb(87,86,145)] cursor-pointer active:bg-[rgb(23,22,95)] w-[25%] flex items-center justify-center"
               >
