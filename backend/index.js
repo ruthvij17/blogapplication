@@ -68,7 +68,7 @@ app.post("/login", async (req, res) => {
 // Post blog
 app.post("/post/blog", async (req, res) => {
   try {
-    const { title, category, about, posterImage, data } = req.body;
+    const { id, title, category, about, posterImage, data } = req.body;
 
     const blogData = await BlogModel.create({
       title,
@@ -77,6 +77,7 @@ app.post("/post/blog", async (req, res) => {
       posterImage,
       data,
     });
+    await UserModel.findByIdAndUpdate(id, { $push: { blogs: blogData._id } });
 
     res.status(200).json({
       success: true,

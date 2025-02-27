@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MdLibraryAdd } from "react-icons/md";
 import { BiSolidImageAdd } from "react-icons/bi";
 import { MdDescription } from "react-icons/md";
 import { BsFillSendFill } from "react-icons/bs";
 import DefaultLayout from "../Layouts/DefaultLayout";
 import axios from "axios";
+import { UserContext } from "../Context/UserContext";
 
 const AddBlogPage = () => {
+  const { user, setUser } = useContext(UserContext);
+  const id = user._id;
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [about, setAbout] = useState("");
@@ -34,6 +37,7 @@ const AddBlogPage = () => {
     e.preventDefault();
     try {
       const response = await axios.post("/post/blog", {
+        id,
         title,
         category,
         about,
@@ -64,13 +68,13 @@ const AddBlogPage = () => {
               placeholder="Enter the title of the blog"
               required
               onChange={(e) => setTitle(e.target.value)}
-              className="border-2 border-white rounded-sm px-2 py-1 text-xl outline-none bg-transparent placeholder:text-[rgba(255,255,255,0.2)]"
+              className="rounded-sm p-2 outline-none bg-white/10 placeholder:text-[rgba(255,255,255,0.2)]"
             />
             <label for="select-option" class="text-white mb-2">
               Category:
             </label>
             <select
-              className="bg-black text-white border-2 border-white rounded-md p-2"
+              className="bg-neutral-900 text-white rounded-md p-2 outline-none"
               required
               onChange={(e) => setCategory(e.target.value)}
             >
@@ -112,7 +116,7 @@ const AddBlogPage = () => {
               placeholder="Enter the brief description about the blog"
               required
               onChange={(e) => setAbout(e.target.value)}
-              className="border-2 border-white rounded-sm px-2 py-1 outline-none bg-transparent placeholder:text-[rgba(255,255,255,0.2)]"
+              className="bg-white/10 rounded-sm p-2 outline-none placeholder:text-[rgba(255,255,255,0.2)]"
             ></textarea>
             <label htmlFor="image">Poster Image:</label>
             <input
@@ -121,7 +125,7 @@ const AddBlogPage = () => {
               value={posterImage}
               placeholder="Enter the url for the poster image "
               onChange={(e) => setPosterImage(e.target.value)}
-              className="border-2 border-white rounded-sm px-2 py-1 outline-none bg-transparent placeholder:text-[rgba(255,255,255,0.2)]"
+              className="bg-white/10 rounded-sm p-2 outline-none placeholder:text-[rgba(255,255,255,0.2)]"
             />
             <br />
             <hr />
@@ -137,7 +141,7 @@ const AddBlogPage = () => {
                           required
                           value={input.content}
                           onChange={(e) => handleInputChange(index, e)}
-                          className="border-2 w-[95%] border-white rounded-sm px-2 py-1 outline-none bg-transparent"
+                          className="w-[95%] rounded-sm p-2 outline-none bg-white/10"
                         ></textarea>
                         <div
                           className="w-[30px] h-[30px] rounded-sm border border-red-700 flex items-center justify-center active:bg-red-700 cursor-pointer"
@@ -160,7 +164,7 @@ const AddBlogPage = () => {
                           type={input.type}
                           value={input.content}
                           onChange={(e) => handleInputChange(index, e)}
-                          className="border-2 w-[95%] border-white rounded-sm px-2 py-1 outline-none bg-transparent"
+                          className="w-[95%] rounded-sm p-2 outline-none bg-white/10"
                         />
                         <div
                           className="w-[30px] h-[30px] rounded-sm border border-red-700 flex items-center justify-center active:bg-red-700 cursor-pointer"

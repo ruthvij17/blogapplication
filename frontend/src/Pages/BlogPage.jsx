@@ -1,5 +1,6 @@
 import React from "react";
 import DefaultLayout from "../Layouts/DefaultLayout";
+import CommentComponent from "../Components/CommentComponent";
 
 const BlogPage = () => {
   const blog = {
@@ -129,6 +130,7 @@ const BlogPage = () => {
           }
         })}
       </div>
+      <CommentComponent />
     </>
   );
 };
