@@ -1,11 +1,17 @@
 import React, { useContext } from "react";
 import { FaSearch } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/V.png";
 import { UserContext } from "../Context/UserContext";
 
 const NavbarComponent = () => {
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    setUser("");
+    navigate("/");
+    localStorage.removeItem("user");
+  };
   return (
     <>
       <div className="w-[98%] h-20 p-3 mx-2 my-1 rounded-lg bg-black flex flex-row justify-between items-center text-white">
@@ -24,7 +30,14 @@ const NavbarComponent = () => {
           </div>
         </div>
         {user ? (
-          <div>HII</div>
+          <div>
+            <button
+              onClick={() => handleLogout()}
+              className="rounded-lg border-[1px] border-amber-50 p-3 hover:bg-[rgba(240,240,240,0.6)] active:bg-black"
+            >
+              Log-out
+            </button>
+          </div>
         ) : (
           <div className="flex flex-row gap-2">
             <Link to="/login">

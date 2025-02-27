@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 
 const LoginPage = () => {
@@ -17,7 +17,6 @@ const LoginPage = () => {
         password: password,
       });
       if (response.status == 200) {
-        // props.setLoggedInUser(response.data.user);
         setUser(response.data.user);
         localStorage.setItem("user", JSON.stringify(response.data.user));
         navigate(`/${response.data.user._id}`);

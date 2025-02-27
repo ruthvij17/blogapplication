@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DefaultLayout from "../Layouts/DefaultLayout";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import Poster from "../Components/PosterComponent";
 import PosterSlider from "../Components/PosterSliderComponent";
 import HeroCarousel from "../Components/HeroCarouselComponent";
+import { useNavigate } from "react-router";
+import { UserContext } from "../Context/UserContext";
 
 const HomePage = () => {
   const [category, setCategory] = useState("All");
+  const { user, setUser } = useContext(UserContext);
+
   useEffect(() => {
     console.log(category);
   }, [category]);
@@ -19,6 +23,15 @@ const HomePage = () => {
     "Fashion",
     "Technology",
   ];
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    if (userData) {
+      setUser(userData);
+      navigate(`/${userData._id}`);
+    }
+  }, []);
 
   const blogs = [
     {
