@@ -19,7 +19,7 @@ const HeroCarousel = () => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 2000,
   };
 
   return (

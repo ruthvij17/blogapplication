@@ -5,10 +5,41 @@ import Poster from "../Components/PosterComponent";
 import PosterSlider from "../Components/PosterSliderComponent";
 import HeroCarousel from "../Components/HeroCarouselComponent";
 import { UserContext } from "../Context/UserContext";
+import axios from "axios";
 
 const HomePage = () => {
   const [category, setCategory] = useState("All");
+  const [trendingBlogs, setTrendingBlogs] = useState();
+  const [suggestedBlogs, setSuggestedBlogs] = useState();
   const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    const getBlogs = async () => {
+      try {
+        const response = await axios.get("/get/trending/blogs");
+        if (response) {
+          setTrendingBlogs(response.data.blogs);
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+    getBlogs();
+  }, []);
+
+  useEffect(() => {
+    const getBlogs = async () => {
+      try {
+        const response = await axios.get("/get/suggested/blogs");
+        if (response) {
+          setSuggestedBlogs(response.data.blogs);
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+    getBlogs();
+  }, []);
 
   useEffect(() => {
     console.log(category);
@@ -29,292 +60,6 @@ const HomePage = () => {
       setUser(userData);
     }
   }, []);
-
-  const blogs = [
-    {
-      title: "Something",
-      category: "Sports",
-      about:
-        "Virat Kohli is an Indian cricketer widely regarded as one of the best batsmen of his generation. Born on November 5, 1988, in Delhi, India, he is known for his aggressive playing style, exceptional batting technique, and remarkable consistency. Kohli has broken numerous cricketing records, including being one of the fastest to reach milestones in One Day Internationals (ODIs) and T20s. He served as the captain of the Indian cricket team, leading them to significant victories. Kohli has received numerous awards, including the prestigious ICC Player of the Year and the Padma Shri. His leadership, alongside his individual achievements, has solidified his place among the game's greats.",
-      posterImage: "https://www.w3schools.com/w3images/lights.jpg",
-      data: [
-        {
-          type: "text",
-          content: "hekllo",
-        },
-        {
-          type: "url",
-          content: "https://www.example.com/images/image1.jpg",
-        },
-        {
-          type: "desc",
-          content: "qefiyfe",
-        },
-        {
-          type: "text",
-          content: "weyfifud",
-        },
-        {
-          type: "desc",
-          content: "wjfyqfeuq",
-        },
-      ],
-    },
-    {
-      title: "Delicious Dishes",
-      category: "Food",
-      about: "Explore some mouthwatering recipes",
-      posterImage:
-        "https://documents.bcci.tv/resizedimageskirti/164_compress.png",
-      data: [
-        {
-          type: "text",
-          content: "Tasty meals",
-        },
-        {
-          type: "url",
-          content: "https://www.example.com/images/foodimage1.jpg",
-        },
-        {
-          type: "desc",
-          content: "Rich flavors",
-        },
-        {
-          type: "text",
-          content: "Fresh ingredients",
-        },
-        {
-          type: "desc",
-          content: "Perfect for family gatherings",
-        },
-      ],
-    },
-    {
-      title: "Healthy Living",
-      category: "Health",
-      about: "Tips for living a healthier life",
-      posterImage:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG276J99WMZdlsHfn17ZukWcAHXgSATWaU_Q&s",
-      data: [
-        {
-          type: "text",
-          content: "Stay fit",
-        },
-        {
-          type: "url",
-          content: "https://www.example.com/images/healthimage1.jpg",
-        },
-        {
-          type: "desc",
-          content: "Mental and physical well-being",
-        },
-        {
-          type: "text",
-          content: "Eat balanced meals",
-        },
-        {
-          type: "desc",
-          content: "Incorporate exercise into your routine",
-        },
-      ],
-    },
-    {
-      title: "Fashion Trends 2025",
-      category: "Fashion",
-      about: "The latest in fashion trends",
-      posterImage:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBBiseRaDGxoJu6Ytd7ndyPA97S3kbkJLpnA&s",
-      data: [
-        {
-          type: "text",
-          content: "Latest fashion",
-        },
-        {
-          type: "url",
-          content: "https://www.example.com/images/fashionimage1.jpg",
-        },
-        {
-          type: "desc",
-          content: "Trendy outfits for the season",
-        },
-        {
-          type: "text",
-          content: "Street style",
-        },
-        {
-          type: "desc",
-          content: "Dress to impress",
-        },
-      ],
-    },
-    {
-      title: "Tech Innovations",
-      category: "Technology",
-      about: "Breaking new boundaries in tech",
-      data: [
-        {
-          type: "text",
-          content: "Cutting-edge tech",
-        },
-        {
-          type: "url",
-          content: "https://www.example.com/images/techimage1.jpg",
-        },
-        {
-          type: "desc",
-          content: "Future of gadgets",
-        },
-        {
-          type: "text",
-          content: "AI revolution",
-        },
-        {
-          type: "desc",
-          content: "Smart homes",
-        },
-      ],
-    },
-    {
-      title: "City Life",
-      category: "Lifestyle",
-      about: "Embracing the city lifestyle",
-      posterImage: "https://www.w3schools.com/w3images/lights.jpg",
-      data: [
-        {
-          type: "text",
-          content: "Urban living",
-        },
-        {
-          type: "url",
-          content: "https://www.example.com/images/lifestyleimage1.jpg",
-        },
-        {
-          type: "desc",
-          content: "Vibrant communities",
-        },
-        {
-          type: "text",
-          content: "Modern living",
-        },
-        {
-          type: "desc",
-          content: "City culture",
-        },
-      ],
-    },
-    {
-      title: "Amazing Game",
-      category: "Sports",
-      about: "The game of a lifetime",
-      posterImage: "https://www.w3schools.com/w3images/lights.jpg",
-      data: [
-        {
-          type: "text",
-          content: "Great match",
-        },
-        {
-          type: "url",
-          content: "https://www.example.com/images/image2.jpg",
-        },
-        {
-          type: "desc",
-          content: "Thrilling finish",
-        },
-        {
-          type: "text",
-          content: "Unbelievable shots",
-        },
-        {
-          type: "desc",
-          content: "Incredible teamwork",
-        },
-      ],
-    },
-    {
-      title: "Delicious Desserts",
-      category: "Food",
-      about: "Indulge in these sweet treats",
-      posterImage: "https://www.w3schools.com/w3images/lights.jpg",
-      data: [
-        {
-          type: "text",
-          content: "Sweet indulgence",
-        },
-        {
-          type: "url",
-          content: "https://www.example.com/images/foodimage2.jpg",
-        },
-        {
-          type: "desc",
-          content: "Perfect for dessert lovers",
-        },
-        {
-          type: "text",
-          content: "Delicious cakes",
-        },
-        {
-          type: "desc",
-          content: "A taste of sweetness",
-        },
-      ],
-    },
-    {
-      title: "Fitness Tips",
-      category: "Health",
-      about: "Quick tips for staying fit",
-      posterImage: "https://www.w3schools.com/w3images/lights.jpg",
-      data: [
-        {
-          type: "text",
-          content: "Workouts",
-        },
-        {
-          type: "url",
-          content: "https://www.example.com/images/healthimage2.jpg",
-        },
-        {
-          type: "desc",
-          content: "Stay active",
-        },
-        {
-          type: "text",
-          content: "Exercise at home",
-        },
-        {
-          type: "desc",
-          content: "Boost your metabolism",
-        },
-      ],
-    },
-    {
-      title: "Glamour Fashion",
-      category: "Fashion",
-      about: "Shining the spotlight on fashion icons",
-      posterImage: "https://www.w3schools.com/w3images/lights.jpg",
-      data: [
-        {
-          type: "text",
-          content: "Stylish and glamorous",
-        },
-        {
-          type: "url",
-          content: "https://www.example.com/images/fashionimage2.jpg",
-        },
-        {
-          type: "desc",
-          content: "Runway looks",
-        },
-        {
-          type: "text",
-          content: "Iconic outfits",
-        },
-        {
-          type: "desc",
-          content: "Red carpet fashion",
-        },
-      ],
-    },
-  ];
 
   return (
     <>
@@ -343,7 +88,7 @@ const HomePage = () => {
           <h3 className={`text-2xl font-bold text-white`}>Trending</h3>
           <p className={`text-sm text-white`}>Most popular</p>
         </div>
-        <PosterSlider blogs={blogs} isDark="true" />
+        <PosterSlider blogs={trendingBlogs} isDark="true" />
       </div>
 
       <div className="container px-4 flex flex-col gap-3 bg-black/15 w-[98%] mx-2 rounded-lg mt-2 pb-1">
@@ -351,7 +96,15 @@ const HomePage = () => {
           <h3 className={`text-2xl font-bold text-black`}>Suggested</h3>
           <p className={`text-sm text-black`}>Suggested for you</p>
         </div>
-        <PosterSlider blogs={blogs} isDark={false} />
+        <PosterSlider blogs={suggestedBlogs} isDark={false} />
+      </div>
+
+      <div className="container px-4 flex flex-col gap-3 bg-black/15 w-[98%] mx-2 rounded-lg mt-2 pb-1">
+        <div className="flex flex-col items-start sm:ml-3 mt-2">
+          <h3 className={`text-2xl font-bold text-black`}>Category</h3>
+          <p className={`text-sm text-black`}>Based on selected category</p>
+        </div>
+        <PosterSlider blogs={suggestedBlogs} isDark={false} />
       </div>
     </>
   );

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Poster = (props) => {
   return (
-    <Link to={`/blog/nubb`}>
+    <Link to={`/blog/${props._id}`}>
       <div
         id="scrollbar"
         className={`h-[45vh] flex flex-col items-start gap-2 px-1 py-3 rounded-lg m-2 overflow-auto ${

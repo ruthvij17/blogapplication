@@ -89,8 +89,49 @@ app.post("/post/blog", async (req, res) => {
 });
 
 // Get all blogs
-app.get("/get/blogs", async (req, res) => {
+app.get("/get/trending/blogs", async (req, res) => {
   try {
+    const blogs = await BlogModel.find().select(
+      "title category about posterImage"
+    );
+    res.status(200).json({
+      success: true,
+      message: "Blogs found",
+      blogs,
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+app.get("/get/suggested/blogs", async (req, res) => {
+  try {
+    const blogs = await BlogModel.find().select(
+      "title category about posterImage"
+    );
+    res.status(200).json({
+      success: true,
+      message: "Blogs found",
+      blogs,
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+app.get("/get/blog/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const blog = await BlogModel.findByIdAndUpdate(
+      id,
+      { $inc: { views: 0.5 } }, // Increment views by 1
+      { new: true }
+    );
+    res.status(200).json({
+      success: true,
+      message: "Blogs found",
+      blog,
+    });
   } catch (error) {
     console.log(error.message);
   }

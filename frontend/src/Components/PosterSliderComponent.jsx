@@ -41,9 +41,10 @@ const PosterSlider = (props) => {
   return (
     <>
       <Slider {...settings}>
-        {blogs.map((each, index) => (
-          <Poster {...each} isDark={isDark} key={index} />
-        ))}
+        {blogs &&
+          blogs.map((each, index) => (
+            <Poster {...each} isDark={isDark} key={index} />
+          ))}
       </Slider>
     </>
   );
