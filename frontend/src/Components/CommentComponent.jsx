@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { FaEye } from "react-icons/fa";
+import { BiSolidLike, BiLike } from "react-icons/bi";
 
 const CommentComponent = () => {
   const [isOpen, setIsOpen] = useState(false);

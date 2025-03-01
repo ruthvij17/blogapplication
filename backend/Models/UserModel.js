@@ -20,6 +20,11 @@ const userSchema = mongoose.Schema(
       required: false,
       ref: "Blogs",
     },
+    likedBlogs: {
+      type: [mongoose.Schema.Types.ObjectId],
+      required: false,
+      ref: "Blogs",
+    },
   },
   {
     timestamps: true,

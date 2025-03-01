@@ -1,12 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DefaultLayout from "../Layouts/DefaultLayout";
 import CommentComponent from "../Components/CommentComponent";
 import { useParams } from "react-router";
 import axios from "axios";
+import { FaEye } from "react-icons/fa";
+import { BiSolidLike, BiLike } from "react-icons/bi";
+import { UserContext } from "../Context/UserContext";
 
 const BlogPage = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState();
+  const [liked, setLiked] = useState();
+  const { user, setUser } = useContext(UserContext);
+
+  const handleLike = () => {
+    setLiked(!liked);
+  };
+
+  useEffect(() => {
+    const likeBlog = async () => {
+      try {
+        const userId = JSON.parse(user)._id;
+        const response = await axios.get(`/liked/${userId}/${id}`);
+        if (response.data) {
+          console.log(response.data);
+          setLiked(response.data.liked);
+        } else {
+          alert("Something went wrong");
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+    user && likeBlog();
+  }, []);
+
   useEffect(() => {
     const getBlog = async () => {
       try {
@@ -22,6 +50,7 @@ const BlogPage = () => {
     };
     getBlog();
   }, []);
+
   if (blog) {
     return (
       <>
@@ -49,6 +78,16 @@ const BlogPage = () => {
                   <h1 className="text-white font-extrabold text-5xl uppercase">
                     {blog.title}
                   </h1>
+                  <div className={`flex gap-3`}>
+                    <p className="flex items-center gap-1">
+                      <FaEye />
+                      {blog.views ? Math.ceil(blog.views) : 0}
+                    </p>
+                    <p className="flex items-center gap-1">
+                      <BiSolidLike />
+                      {blog.likes ? Math.ceil(blog.likes) : 0}
+                    </p>
+                  </div>
                   <h4>{blog.about}</h4>
                 </div>
               </div>
@@ -90,6 +129,22 @@ const BlogPage = () => {
               );
             }
           })}
+        </div>
+
+        <div
+          className={`flex flex-col text-2xl gap-2 bg-black rounded-lg w-[98%] text-white mx-2 p-2`}
+        >
+          <p className="flex items-center gap-1 w-fit">
+            <FaEye />
+            {blog.views ? Math.ceil(blog.views) : 0}
+          </p>
+          <p
+            className="flex items-center gap-1 w-fit"
+            onClick={() => handleLike()}
+          >
+            {liked ? <BiSolidLike /> : <BiLike />}
+            {blog.likes ? Math.ceil(blog.likes) : 0}
+          </p>
         </div>
         <CommentComponent />
       </>

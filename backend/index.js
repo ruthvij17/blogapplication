@@ -92,7 +92,7 @@ app.post("/post/blog", async (req, res) => {
 app.get("/get/trending/blogs", async (req, res) => {
   try {
     const blogs = await BlogModel.find().select(
-      "title category about posterImage"
+      "title category about posterImage views likes"
     );
     res.status(200).json({
       success: true,
@@ -107,7 +107,23 @@ app.get("/get/trending/blogs", async (req, res) => {
 app.get("/get/suggested/blogs", async (req, res) => {
   try {
     const blogs = await BlogModel.find().select(
-      "title category about posterImage"
+      "title category about posterImage views likes"
+    );
+    res.status(200).json({
+      success: true,
+      message: "Blogs found",
+      blogs: blogs.reverse(),
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+app.get("/get/:category/blogs", async (req, res) => {
+  try {
+    let { category } = req.params;
+    const blogs = await BlogModel.find({ category }).select(
+      "title category about posterImage views likes"
     );
     res.status(200).json({
       success: true,
@@ -127,11 +143,51 @@ app.get("/get/blog/:id", async (req, res) => {
       { $inc: { views: 0.5 } }, // Increment views by 1
       { new: true }
     );
+
     res.status(200).json({
       success: true,
       message: "Blogs found",
       blog,
     });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+app.get("/liked/:id/:blogId", async (req, res) => {
+  try {
+    const { id, blogId } = req.params;
+    const likedBlogs = await UserModel.findById(id).select("likedBlogs");
+
+    const liked = likedBlogs.likedBlogs.find(
+      (likedBlogs) => likedBlogs == blogId
+    );
+
+    res.status(200).json({ success: true, liked: liked ? true : true });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+app.get("/like/blog/:id/:liked", async (req, res) => {
+  try {
+    const { id, liked } = req.params;
+    let blog;
+    if (liked == "true") {
+      blog = await BlogModel.findByIdAndUpdate(
+        id,
+        { $inc: { likes: 0.5 } }, // Increment views by 1
+        { new: true }
+      );
+    } else {
+      blog = await BlogModel.findByIdAndUpdate(
+        id,
+        { $inc: { likes: -0.5 } }, // Increment views by 1
+        { new: true }
+      );
+    }
+
+    res.status(200).json({ success: true, blog });
   } catch (error) {
     console.log(error.message);
   }

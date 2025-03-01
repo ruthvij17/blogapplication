@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
+import { BiSolidLike } from "react-icons/bi";
 
 const Poster = (props) => {
   return (
@@ -18,7 +20,7 @@ const Poster = (props) => {
                 : "https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png"
             }
             alt="post"
-            className={`w-full rounded-md h-40 border object-cover ${
+            className={`w-full rounded-md h-[25vh] border object-cover ${
               props.isDark ? "border-white" : "border-black"
             }`}
           />
@@ -30,6 +32,20 @@ const Poster = (props) => {
           >
             {props.title}
           </h3>
+          <div
+            className={`flex gap-3  ${
+              props.isDark ? "text-white/50" : "text-black/50"
+            } text-sm`}
+          >
+            <p className="flex items-center gap-1">
+              <FaEye />
+              {props.views ? Math.ceil(props.views) : 0}
+            </p>
+            <p className="flex items-center gap-1">
+              <BiSolidLike />
+              {props.likes ? Math.ceil(props.likes) : 0}
+            </p>
+          </div>
           <p
             className={`text-[10px] ${
               props.isDark ? "text-white/50" : "text-black/50"

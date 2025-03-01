@@ -39,11 +39,12 @@ const HeroCarousel = () => {
           })}
         </HeroSlider>
       </div>
+
       <div className="hidden lg:block">
         <HeroSlider {...settingsLG}>
           {images.map((image) => {
             return (
-              <div className="w-[98%] h-96 px-2 py-1 outline-none overflow-hidden">
+              <div className="w-[98%] h-96 px-2 py- outline-none overflow-hidden">
                 <img
                   src={image}
                   alt="Hero banner"
