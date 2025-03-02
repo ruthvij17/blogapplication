@@ -176,7 +176,7 @@ const BlogPage = () => {
             {blog.views ? Math.ceil(blog.views) : 0}
           </p>
           <p
-            className="flex items-center gap-1 w-fit"
+            className="flex items-center gap-1 w-fit cursor-pointer"
             onClick={() => {
               setLiked(!liked);
               handleLike();
