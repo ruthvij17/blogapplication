@@ -36,7 +36,7 @@ app.post("/sign-in", async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "User added successfully",
+      message: "User added successfully please log in to continue",
     });
   } catch (error) {
     console.log(error.message);
@@ -163,28 +163,39 @@ app.get("/liked/:id/:blogId", async (req, res) => {
       (likedBlogs) => likedBlogs == blogId
     );
 
-    res.status(200).json({ success: true, liked: liked ? true : true });
+    res.status(200).json({ success: true, liked: liked ? true : false });
   } catch (error) {
     console.log(error.message);
   }
 });
 
-app.get("/like/blog/:id/:liked", async (req, res) => {
+app.post("/like/blog/:id", async (req, res) => {
   try {
-    const { id, liked } = req.params;
+    const { id } = req.params;
+    const { userId, liked } = req.body;
+    console.log(liked);
+
     let blog;
-    if (liked == "true") {
+    if (!liked) {
       blog = await BlogModel.findByIdAndUpdate(
         id,
-        { $inc: { likes: 0.5 } }, // Increment views by 1
+        { $inc: { likes: 1 } },
         { new: true }
       );
+
+      await UserModel.findByIdAndUpdate(userId, {
+        $addToSet: { likedBlogs: id },
+      });
     } else {
       blog = await BlogModel.findByIdAndUpdate(
         id,
-        { $inc: { likes: -0.5 } }, // Increment views by 1
+        { $inc: { likes: -1 } },
         { new: true }
       );
+
+      await UserModel.findByIdAndUpdate(userId, {
+        $pull: { likedBlogs: id },
+      });
     }
 
     res.status(200).json({ success: true, blog });

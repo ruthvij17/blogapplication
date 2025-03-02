@@ -20,8 +20,8 @@ const SigninPage = () => {
       const response = await axios.post("/sign-in", { email, password, name });
       if (response.status == 200) {
         navigate("/login");
+        alert(response.data.message);
       } else {
-        console.log(response.data.message);
         alert(response.data.message);
         return;
       }

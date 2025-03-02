@@ -13,17 +13,54 @@ const BlogPage = () => {
   const [liked, setLiked] = useState();
   const { user, setUser } = useContext(UserContext);
 
+  // useEffect(() => {
+  //   const likeBlog = async () => {
+  //     try {
+  //       const userId = user._id ? user._id : JSON.parse(user)._id;
+  //       const response = await axios.post(`/like/blog/${id}`, {
+  //         userId,
+  //         liked,
+  //       });
+
+  //       if (response.data) {
+  //         setBlog(response.data.blog);
+  //       } else {
+  //         alert("Something went wrong");
+  //       }
+  //     } catch (error) {
+  //       console.log(error.message);
+  //     }
+  //   };
+  //   user && likeBlog();
+  // }, [liked]);
+
   const handleLike = () => {
-    setLiked(!liked);
+    const likeBlog = async () => {
+      try {
+        const userId = user._id ? user._id : JSON.parse(user)._id;
+        const response = await axios.post(`/like/blog/${id}`, {
+          userId,
+          liked,
+        });
+
+        if (response.data) {
+          setBlog(response.data.blog);
+        } else {
+          alert("Something went wrong");
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    user && likeBlog();
   };
 
   useEffect(() => {
     const likeBlog = async () => {
       try {
-        const userId = JSON.parse(user)._id;
+        const userId = user._id ? user._id : JSON.parse(user)._id;
         const response = await axios.get(`/liked/${userId}/${id}`);
         if (response.data) {
-          console.log(response.data);
           setLiked(response.data.liked);
         } else {
           alert("Something went wrong");
@@ -63,11 +100,11 @@ const BlogPage = () => {
             }}
           >
             <div className="absolute z-30 left-10 top-5 flex items-center gap-10">
-              <div className="h-[82vh] max-w-[60vw] min-w-fit">
+              <div className="h-[82vh] min-w-fit">
                 <img
                   src={blog.posterImage}
                   alt="poster movie"
-                  className="w-full h-full rounded-lg"
+                  className="w-full h-full rounded-lg max-w-[70vw]"
                 />
               </div>
               <div className="flex flex-col gap-3">
@@ -140,7 +177,10 @@ const BlogPage = () => {
           </p>
           <p
             className="flex items-center gap-1 w-fit"
-            onClick={() => handleLike()}
+            onClick={() => {
+              setLiked(!liked);
+              handleLike();
+            }}
           >
             {liked ? <BiSolidLike /> : <BiLike />}
             {blog.likes ? Math.ceil(blog.likes) : 0}
