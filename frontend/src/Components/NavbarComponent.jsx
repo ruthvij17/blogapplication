@@ -7,6 +7,7 @@ import { CgProfile } from "react-icons/cg";
 
 const NavbarComponent = () => {
   const { user, setUser } = useContext(UserContext);
+  //const userId = user._id ? user._id : JSON.parse(user)._id;
   const navigate = useNavigate();
   const handleLogout = () => {
     setUser("");
@@ -32,7 +33,7 @@ const NavbarComponent = () => {
         </div>
         {user ? (
           <div className="flex flex-row gap-4 items-center">
-            <Link to="/profile">
+            <Link to={`/profile/${user._id ? user._id : JSON.parse(user)._id}`}>
               <CgProfile className="text-4xl " />
             </Link>
             <Link to="/add/blog">

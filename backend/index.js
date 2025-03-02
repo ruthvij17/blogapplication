@@ -204,6 +204,87 @@ app.post("/like/blog/:id", async (req, res) => {
   }
 });
 
+app.get("/saved/:id/:blogId", async (req, res) => {
+  try {
+    const { id, blogId } = req.params;
+    const savedBlogs = await UserModel.findById(id).select("savedBlogs");
+
+    const saved = savedBlogs.savedBlogs.find(
+      (savedBlogs) => savedBlogs == blogId
+    );
+
+    res.status(200).json({ success: true, saved: saved ? true : false });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+app.post("/save/blog/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId, saved } = req.body;
+    console.log(saved);
+
+    let blog;
+    if (!saved) {
+      await UserModel.findByIdAndUpdate(userId, {
+        $addToSet: { savedBlogs: id },
+      });
+    } else {
+      await UserModel.findByIdAndUpdate(userId, {
+        $pull: { savedBlogs: id },
+      });
+    }
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+// Retrieving the liked blogs
+app.get("/get/liked/blogs/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await UserModel.findById(id)
+      .select("likedBlogs")
+      .populate("likedBlogs", "title category about posterImage views likes");
+    if (data) {
+      res.status(200).json({
+        message: "List of liked blogs",
+        likedBlogs: data.likedBlogs,
+      });
+    } else {
+      res.status(201).json({
+        message: "There are no liked blogs",
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+app.get("/get/saved/blogs/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await UserModel.findById(id)
+      .select("savedBlogs")
+      .populate("savedBlogs", "title category about posterImage views likes");
+    if (data) {
+      res.status(200).json({
+        message: "List of saved blogs",
+        savedBlogs: data.savedBlogs,
+      });
+    } else {
+      res.status(201).json({
+        message: "There are no liked blogs",
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);
 });

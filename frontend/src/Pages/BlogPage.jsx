@@ -3,7 +3,8 @@ import DefaultLayout from "../Layouts/DefaultLayout";
 import CommentComponent from "../Components/CommentComponent";
 import { useParams } from "react-router";
 import axios from "axios";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaRegShareSquare } from "react-icons/fa";
+import { IoSaveOutline, IoSaveSharp } from "react-icons/io5";
 import { BiSolidLike, BiLike } from "react-icons/bi";
 import { UserContext } from "../Context/UserContext";
 
@@ -11,28 +12,24 @@ const BlogPage = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState();
   const [liked, setLiked] = useState();
+  const [saved, setSaved] = useState();
   const { user, setUser } = useContext(UserContext);
 
-  // useEffect(() => {
-  //   const likeBlog = async () => {
-  //     try {
-  //       const userId = user._id ? user._id : JSON.parse(user)._id;
-  //       const response = await axios.post(`/like/blog/${id}`, {
-  //         userId,
-  //         liked,
-  //       });
-
-  //       if (response.data) {
-  //         setBlog(response.data.blog);
-  //       } else {
-  //         alert("Something went wrong");
-  //       }
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   };
-  //   user && likeBlog();
-  // }, [liked]);
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Check out this awesome blog!",
+          text: blog.title,
+          url: window.location.href,
+        })
+        .then(() => console.log("Share successful!"))
+        .catch((error) => console.log("Error sharing:", error));
+    } else {
+      // Fallback if Web Share API is not supported
+      alert("Sharing is not supported on this device or browser.");
+    }
+  };
 
   const handleLike = () => {
     const likeBlog = async () => {
@@ -55,6 +52,27 @@ const BlogPage = () => {
     user && likeBlog();
   };
 
+  const handleSaved = () => {
+    const savedBlog = async () => {
+      try {
+        const userId = user._id ? user._id : JSON.parse(user)._id;
+        const response = await axios.post(`/save/blog/${id}`, {
+          userId,
+          saved,
+        });
+
+        if (response.data) {
+          // setBlog(response.data.blog);
+        } else {
+          alert("Something went wrong");
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    user && savedBlog();
+  };
+
   useEffect(() => {
     const likeBlog = async () => {
       try {
@@ -70,6 +88,23 @@ const BlogPage = () => {
       }
     };
     user && likeBlog();
+  }, []);
+
+  useEffect(() => {
+    const savedBlog = async () => {
+      try {
+        const userId = user._id ? user._id : JSON.parse(user)._id;
+        const response = await axios.get(`/saved/${userId}/${id}`);
+        if (response.data) {
+          setSaved(response.data.saved);
+        } else {
+          alert("Something went wrong");
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+    user && savedBlog();
   }, []);
 
   useEffect(() => {
@@ -169,7 +204,7 @@ const BlogPage = () => {
         </div>
 
         <div
-          className={`flex flex-col text-2xl gap-2 bg-black rounded-lg w-[98%] text-white mx-2 p-2`}
+          className={`flex text-2xl gap-4 justify-around bg-black rounded-lg w-[98%] text-white mx-2 p-2`}
         >
           <p className="flex items-center gap-1 w-fit">
             <FaEye />
@@ -184,6 +219,32 @@ const BlogPage = () => {
           >
             {liked ? <BiSolidLike /> : <BiLike />}
             {blog.likes ? Math.ceil(blog.likes) : 0}
+          </p>
+          <p
+            className="flex w-fit items-center gap-1"
+            onClick={() => handleShare()}
+          >
+            <FaRegShareSquare />{" "}
+            <span className="text-sm text-gray-400"> Share</span>
+          </p>
+          <p
+            className="flex items-center gap-1 w-fit cursor-pointer"
+            onClick={() => {
+              setSaved(!saved);
+              handleSaved();
+            }}
+          >
+            {saved ? (
+              <>
+                <IoSaveSharp />{" "}
+                <span className="text-sm text-gray-400">Unsave</span>
+              </>
+            ) : (
+              <>
+                <IoSaveOutline />{" "}
+                <span className="text-sm text-gray-400">Save</span>
+              </>
+            )}
           </p>
         </div>
         <CommentComponent />

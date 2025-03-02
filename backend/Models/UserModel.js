@@ -25,6 +25,11 @@ const userSchema = mongoose.Schema(
       required: false,
       ref: "Blogs",
     },
+    savedBlogs: {
+      type: [mongoose.Schema.Types.ObjectId],
+      required: false,
+      ref: "Blogs",
+    },
   },
   {
     timestamps: true,

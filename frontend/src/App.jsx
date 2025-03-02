@@ -32,7 +32,7 @@ function App() {
         element={user ? <AddBlogPage /> : <LoginPage />}
       ></Route>
       <Route
-        path="/profile"
+        path="/profile/:id"
         element={user ? <ProfilePage /> : <LoginPage />}
       ></Route>
     </Routes>
