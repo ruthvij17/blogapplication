@@ -90,10 +90,10 @@ const ProfilePage = () => {
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT69XWrYQShR6-32LcesotKMgKG3FLvh7Ap3Q&s"
               alt=""
-              className="rounded-full h-[150px] w-[150px] transform translate-y-[53px] border-4 border-black"
+              className="rounded-full h-[9em] w-[9em] transform translate-y-[3.2em] border-4 border-black"
             />
           </div>
-          <div className="mt-[80px] flex flex-col items-center">
+          <div className="mt-[4.8em] flex flex-col items-center">
             <h1 className="text-3xl font-extrabold text-center">
               Ruthvij R Chandan
             </h1>
