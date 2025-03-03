@@ -43,18 +43,8 @@ const blogSchema = mongoose.Schema(
       required: false,
     },
     comments: {
-      type: [
-        {
-          email: {
-            type: String,
-            required: true,
-          },
-          comment: {
-            type: String,
-            required: true,
-          },
-        },
-      ],
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Comments",
       required: false,
     },
   },

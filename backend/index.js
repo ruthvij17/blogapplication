@@ -5,6 +5,7 @@ const dotenv = require("dotenv").config();
 const cors = require("cors");
 const UserModel = require("./Models/UserModel");
 const BlogModel = require("./Models/BlogModel");
+const CommentModel = require("./Models/CommentModel");
 
 dbConnection();
 const PORT = process.env.PORT || 3000;
@@ -223,7 +224,7 @@ app.post("/save/blog/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { userId, saved } = req.body;
-    console.log(saved);
+    //console.log(saved);
 
     let blog;
     if (!saved) {
@@ -252,7 +253,7 @@ app.get("/get/liked/blogs/:id", async (req, res) => {
     if (data) {
       res.status(200).json({
         message: "List of liked blogs",
-        likedBlogs: data.likedBlogs,
+        likedBlogs: data.likedBlogs.reverse(),
       });
     } else {
       res.status(201).json({
@@ -273,11 +274,80 @@ app.get("/get/saved/blogs/:id", async (req, res) => {
     if (data) {
       res.status(200).json({
         message: "List of saved blogs",
-        savedBlogs: data.savedBlogs,
+        savedBlogs: data.savedBlogs.reverse(),
       });
     } else {
       res.status(201).json({
         message: "There are no liked blogs",
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+//get the blogs posted by the particular user
+app.get("/get/posted/blogs/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await UserModel.findById(id)
+      .select("blogs")
+      .populate("blogs", "title category about posterImage views likes");
+    if (data) {
+      res.status(200).json({
+        message: "List of posted blogs",
+        postedBlogs: data.blogs.reverse(),
+      });
+    } else {
+      res.status(201).json({
+        message: "There are no posted blogs",
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+// To add coments to the database
+app.post("/post/comment", async (req, res) => {
+  try {
+    const { userId, blogId, commentData, time } = req.body;
+    const data = await CommentModel.create({
+      commentedUser: userId,
+      commentData: commentData,
+      time: time,
+    });
+    const blogData = await BlogModel.findByIdAndUpdate(blogId, {
+      $addToSet: { comments: data._id },
+    });
+
+    res.status(200).json({
+      data: data,
+      message: "Comments added",
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+//To retrieve comments
+app.get("/get/comments/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await BlogModel.findById(id)
+      .select("comments") // Select the comments field from the BlogModel
+      .populate({
+        path: "comments",
+        select: "commentData time", // Populate the comments field (which is an array of ObjectIds)
+        populate: {
+          path: "commentedUser", // Populate the commentedUser field from CommentModel
+          select: "name", // Only select the name field from the User model
+        },
+      });
+    if (data) {
+      res.status(200).json({
+        message: "The retrieved comments",
+        comments: data.comments,
       });
     }
   } catch (error) {
