@@ -14,9 +14,11 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { useParams } from "react-router";
 import PosterSlider from "../Components/PosterSliderComponent";
 import { UserContext } from "../Context/UserContext";
+import EditProfileComponent from "../Components/EditProfileComponent";
 
 const ProfilePage = () => {
   const { user, setUser } = useContext(UserContext);
+  const [isOpen, setIsOpen] = useState(false);
 
   const id = user._id ? user._id : JSON.parse(user)._id;
 
@@ -85,6 +87,7 @@ const ProfilePage = () => {
     ],
   };
 
+  // posted blogs
   useEffect(() => {
     const getBlogs = async () => {
       try {
@@ -101,6 +104,7 @@ const ProfilePage = () => {
 
   return (
     <>
+      {isOpen ? <EditProfileComponent /> : ""}
       <div className="w-[98%] flex flex-row justify-center mx-2 gap-2 flex-wrap">
         {id == uid ? <ProfileSlidersComponent /> : ""}
         <div
@@ -109,7 +113,10 @@ const ProfilePage = () => {
         >
           <div className="w-full h-[25vh] flex flex-col items-center bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTdgyWhgLt63OybG15IZYn8pRqoPvNiEToPQ&s')] bg-cover">
             <div className="w-full h-3 relative">
-              <FaRegEdit className="absolute top-2 right-2 text-2xl" />
+              <FaRegEdit
+                className="absolute top-2 right-2 text-2xl"
+                onClick={() => setIsOpen(!isOpen)}
+              />
             </div>
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT69XWrYQShR6-32LcesotKMgKG3FLvh7Ap3Q&s"

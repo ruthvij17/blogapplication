@@ -9,7 +9,7 @@ const CommentComponent = () => {
   const [input, setInput] = useState();
   const { user, setUser } = useContext(UserContext);
 
-  const uid = user._id ? user._id : JSON.parse(user)._id;
+  const uid = user && (user._id ? user._id : JSON.parse(user)._id);
   const { id } = useParams();
 
   const getComments = async () => {
