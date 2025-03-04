@@ -355,6 +355,61 @@ app.get("/get/comments/:id", async (req, res) => {
   }
 });
 
+app.post("/post/profile/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, bio, profileImage, socialLinks } = req.body;
+    if (name) {
+      const userData = await UserModel.findByIdAndUpdate(id, { name: name });
+    }
+    const data = await UserModel.findByIdAndUpdate(
+      id,
+      {
+        profile: { bio, profileImage, socialLinks },
+      },
+      { new: true }
+    );
+    if (data) {
+      res.status(200).json({
+        message: "Profile updated successfully",
+        data,
+      });
+    } else {
+      res.status(201).json({
+        message: "Profile not updated",
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+// app.get("/get/profile/:id", async (req, res) => {
+//   try {
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// });
+
+app.get("/get/profile/details/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await UserModel.findById(id).select("name profile email");
+
+    if (data) {
+      res.status(200).json({
+        message: "Profile retrieved successfully",
+        profile: { ...data.profile, name: data.name, email: data.email },
+      });
+    } else {
+      res.status(201).json({
+        message: "Profile not updated",
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);
 });

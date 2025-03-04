@@ -30,6 +30,33 @@ const userSchema = mongoose.Schema(
       required: false,
       ref: "Blogs",
     },
+    profile: {
+      bio: {
+        type: String,
+        required: false,
+      },
+      profileImage: {
+        type: String,
+        default:
+          "https://verdantfox.com/static/images/avatars_default/av_blank.png",
+        required: false,
+      },
+      socialLinks: {
+        type: [
+          {
+            socialName: {
+              type: String,
+              required: true,
+            },
+            url: {
+              type: String,
+              required: true,
+            },
+          },
+        ],
+        required: false,
+      },
+    },
   },
   {
     timestamps: true,
