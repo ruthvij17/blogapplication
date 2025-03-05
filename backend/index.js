@@ -144,7 +144,7 @@ app.get("/get/blog/:id", async (req, res) => {
       id,
       { $inc: { views: 0.5 } }, // Increment views by 1
       { new: true }
-    );
+    ).populate("postedBy", "name email profile.profileImage");
 
     res.status(200).json({
       success: true,

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import DefaultLayout from "../Layouts/DefaultLayout";
 import CommentComponent from "../Components/CommentComponent";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import axios from "axios";
 import { FaEye, FaRegShareSquare } from "react-icons/fa";
 import { IoSaveOutline, IoSaveSharp } from "react-icons/io5";
@@ -13,6 +13,7 @@ const BlogPage = () => {
   const [blog, setBlog] = useState();
   const [liked, setLiked] = useState();
   const [saved, setSaved] = useState();
+  const [postedBy, setPostedBy] = useState();
   const { user, setUser } = useContext(UserContext);
 
   const handleShare = () => {
@@ -113,6 +114,7 @@ const BlogPage = () => {
         const response = await axios.get(`/get/blog/${id}`);
         if (response.data) {
           setBlog(response.data.blog);
+          setPostedBy(response.data.blog.postedBy);
         } else {
           alert("Blog not found");
         }
@@ -246,6 +248,25 @@ const BlogPage = () => {
               </>
             )}
           </p>
+        </div>
+        <div className="relative left-[50%] transform translate-x-[-50%] bg-black/10 w-fit rounded-lg mt-2 mx-2 flex flex-col justify-center items-center">
+          <h1 className="font-bold">Posted By:</h1>
+          <Link
+            to={`/profile/${postedBy._id}`}
+            className="flex flex-row items-center justify-center"
+          >
+            <img
+              src={postedBy && postedBy.profile.profileImage}
+              alt="Profile"
+              className="w-[15%] p-2"
+            />
+            <div className="">
+              <h1 className="text-black font-semibold text-xl font-serif">
+                {postedBy.name}
+              </h1>
+              <p className="font-light font-serif">{postedBy.email}</p>
+            </div>
+          </Link>
         </div>
         <CommentComponent />
       </>

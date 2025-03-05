@@ -61,7 +61,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const getProfileDetails = async () => {
       try {
-        const response = await axios.get(`/get/profile/details/${id}`);
+        const response = await axios.get(`/get/profile/details/${uid}`);
         if (response.data) {
           setProfile(response.data.profile);
           setSocialLinks(response.data.profile.socialLinks);
@@ -91,12 +91,16 @@ const ProfilePage = () => {
           id="scrollbar"
         >
           <div className="w-full h-[25vh] flex flex-col items-center bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTdgyWhgLt63OybG15IZYn8pRqoPvNiEToPQ&s')] bg-cover">
-            <div className="w-full h-3 relative">
-              <FaRegEdit
-                className="absolute top-2 right-2 text-2xl"
-                onClick={() => setIsOpen(true)}
-              />
-            </div>
+            {id == uid ? (
+              <div className="w-full h-3 relative">
+                <FaRegEdit
+                  className="absolute top-2 right-2 text-2xl"
+                  onClick={() => setIsOpen(true)}
+                />
+              </div>
+            ) : (
+              ""
+            )}
             <img
               src={
                 (profile && profile.profileImage) ||
