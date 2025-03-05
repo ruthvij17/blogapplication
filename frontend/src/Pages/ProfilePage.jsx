@@ -19,6 +19,7 @@ import EditProfileComponent from "../Components/EditProfileComponent";
 const ProfilePage = () => {
   const { user, setUser } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [isFollowed, setIsFollowed] = useState(false);
 
   const [profile, setProfile] = useState();
   const [socialLinks, setSocialLinks] = useState();
@@ -58,20 +59,59 @@ const ProfilePage = () => {
   }, []);
 
   // get profile details
+  const getProfileDetails = async () => {
+    try {
+      const response = await axios.get(`/get/profile/details/${uid}`);
+      if (response.data) {
+        setProfile(response.data.profile);
+        setSocialLinks(response.data.profile.socialLinks);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   useEffect(() => {
-    const getProfileDetails = async () => {
+    getProfileDetails();
+  }, [isOpen]);
+
+  useEffect(() => {
+    const follow = async () => {
       try {
-        const response = await axios.get(`/get/profile/details/${uid}`);
+        const response = await axios.get(`/get/followed/${id}/${uid}`);
         if (response.data) {
-          setProfile(response.data.profile);
-          setSocialLinks(response.data.profile.socialLinks);
+          setIsFollowed(response.data.followed);
+        } else {
+          alert("Something went wrong");
         }
       } catch (error) {
         alert(error.message);
       }
     };
-    getProfileDetails();
-  }, [isOpen]);
+    user && follow();
+  }, []);
+
+  const handleFollow = () => {
+    setIsFollowed(!isFollowed);
+    const follow = async () => {
+      try {
+        const response = await axios.post(`post/follow/user`, {
+          followerId: id,
+          bloggerId: uid,
+          followed: isFollowed,
+        });
+
+        if (response.data) {
+          //setProfile(response.data.profile);
+          getProfileDetails();
+        } else {
+          alert("Something went wrong");
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    user && follow();
+  };
 
   return (
     <>
@@ -120,18 +160,29 @@ const ProfilePage = () => {
             <p className="BIO w-[75%] text-center text-gray-200 text-sm">
               {profile && profile.bio}
             </p>
-            <div className="bg-blue-500 px-2 py-1 rounded-lg my-1">Follow</div>
+            <div
+              className={`${
+                isFollowed ? "bg-transparent" : "bg-blue-500 "
+              } px-3 w-25 py-1 rounded-lg my-1 cursor-pointer border-3 border-blue-500 text-center`}
+              onClick={() => handleFollow()}
+            >
+              {isFollowed ? "Following" : "Follow"}
+            </div>
             <div className="flex flex-row gap-3 mt-2 items-center justify-center">
               <div className="flex flex-col items-center border-1 w-23 border-gray-400 px-4 py-1 rounded-lg">
-                <p className="font-bold">100</p>
+                <p className="font-bold">{profile && profile.blogs}</p>
                 <p className="text-xs">Blogs</p>
               </div>
               <div className="flex flex-col items-center border-1 w-23 border-gray-400 px-4 py-1 rounded-lg">
-                <p className="font-bold">100</p>
+                <p className="font-bold">
+                  {profile && profile.followers.length}
+                </p>
                 <p className="text-xs">Followers</p>
               </div>
               <div className="flex flex-col items-center border-1 w-23 border-gray-400 px-4 py-1 rounded-lg">
-                <p className="font-bold">100</p>
+                <p className="font-bold">
+                  {profile && profile.following.length}
+                </p>
                 <p className="text-xs">Following</p>
               </div>
             </div>

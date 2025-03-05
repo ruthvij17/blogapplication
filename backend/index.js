@@ -395,18 +395,89 @@ app.post("/post/profile/:id", async (req, res) => {
 app.get("/get/profile/details/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await UserModel.findById(id).select("name profile email");
+    const data = await UserModel.findById(id).select(
+      "name profile email blogs"
+    );
 
     if (data) {
       res.status(200).json({
         message: "Profile retrieved successfully",
-        profile: { ...data.profile, name: data.name, email: data.email },
+        profile: {
+          ...data.profile,
+          name: data.name,
+          email: data.email,
+          blogs: data.blogs.length,
+        },
       });
     } else {
       res.status(201).json({
         message: "Profile not updated",
       });
     }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+//To know whether the user followed or not
+app.get("/get/followed/:followerId/:bloggerId", async (req, res) => {
+  try {
+    const { followerId, bloggerId } = req.params;
+    const followList = await UserModel.findById(followerId).select(
+      "profile.following"
+    );
+
+    const followed = followList.profile.following.includes(String(bloggerId));
+
+    res.status(200).json({ success: true, followed });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+//To update followers count
+app.post("/post/follow/user", async (req, res) => {
+  try {
+    const { followerId, bloggerId, followed } = req.body;
+
+    let followList;
+    if (!followed) {
+      followList = await UserModel.findByIdAndUpdate(
+        followerId,
+        { $addToSet: { "profile.following": bloggerId } },
+        { new: true }
+      );
+
+      await UserModel.findByIdAndUpdate(
+        bloggerId,
+        { $addToSet: { "profile.followers": followerId } },
+        { new: true }
+      );
+    } else {
+      followList = await UserModel.findByIdAndUpdate(
+        followerId,
+        { $pull: { "profile.following": bloggerId } },
+        { new: true }
+      );
+
+      await UserModel.findByIdAndUpdate(
+        bloggerId,
+        {
+          $pull: { "profile.followers": followerId },
+        },
+        { new: true }
+      );
+    }
+
+    res.status(200).json({
+      success: true,
+      profile: {
+        ...followList.profile,
+        name: followList.name,
+        email: followList.email,
+        blogs: followList.blogs.length,
+      },
+    });
   } catch (error) {
     console.log(error.message);
   }
