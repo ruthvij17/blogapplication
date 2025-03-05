@@ -33,7 +33,7 @@ const NavbarComponent = () => {
         </div>
         {user ? (
           <div className="flex flex-row gap-4 items-center">
-            <Link to={`/profile/${user._id ? user._id : JSON.parse(user)._id}`}>
+            <Link to={`/profile/${user._id || JSON.parse(user)._id}`}>
               <CgProfile className="text-4xl " />
             </Link>
             <Link to="/add/blog">

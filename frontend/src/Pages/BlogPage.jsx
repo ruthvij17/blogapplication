@@ -34,7 +34,7 @@ const BlogPage = () => {
   const handleLike = () => {
     const likeBlog = async () => {
       try {
-        const userId = user._id ? user._id : JSON.parse(user)._id;
+        const userId = user._id || JSON.parse(user)._id;
         const response = await axios.post(`/like/blog/${id}`, {
           userId,
           liked,
@@ -55,7 +55,7 @@ const BlogPage = () => {
   const handleSaved = () => {
     const savedBlog = async () => {
       try {
-        const userId = user._id ? user._id : JSON.parse(user)._id;
+        const userId = user._id || JSON.parse(user)._id;
         const response = await axios.post(`/save/blog/${id}`, {
           userId,
           saved,
@@ -76,7 +76,7 @@ const BlogPage = () => {
   useEffect(() => {
     const likeBlog = async () => {
       try {
-        const userId = user._id ? user._id : JSON.parse(user)._id;
+        const userId = user._id || JSON.parse(user)._id;
         const response = await axios.get(`/liked/${userId}/${id}`);
         if (response.data) {
           setLiked(response.data.liked);
@@ -93,7 +93,7 @@ const BlogPage = () => {
   useEffect(() => {
     const savedBlog = async () => {
       try {
-        const userId = user._id ? user._id : JSON.parse(user)._id;
+        const userId = user._id || JSON.parse(user)._id;
         const response = await axios.get(`/saved/${userId}/${id}`);
         if (response.data) {
           setSaved(response.data.saved);

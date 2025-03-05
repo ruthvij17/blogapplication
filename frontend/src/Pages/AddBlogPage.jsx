@@ -9,7 +9,7 @@ import { UserContext } from "../Context/UserContext";
 
 const AddBlogPage = () => {
   const { user } = useContext(UserContext);
-  const id = user._id ? user._id : JSON.parse(user)._id;
+  const id = user._id || JSON.parse(user)._id;
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [about, setAbout] = useState("");

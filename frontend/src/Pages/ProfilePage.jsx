@@ -23,7 +23,7 @@ const ProfilePage = () => {
   const [profile, setProfile] = useState();
   const [socialLinks, setSocialLinks] = useState();
 
-  const id = user._id ? user._id : JSON.parse(user)._id;
+  const id = user._id || JSON.parse(user)._id;
 
   const uid = useParams().id;
 
@@ -99,9 +99,8 @@ const ProfilePage = () => {
             </div>
             <img
               src={
-                profile && profile.profileImage
-                  ? profile.profileImage
-                  : "https://verdantfox.com/static/images/avatars_default/av_blank.png"
+                (profile && profile.profileImage) ||
+                "https://verdantfox.com/static/images/avatars_default/av_blank.png"
               }
               alt="image not found"
               className="rounded-full h-[9em] w-[9em] transform translate-y-[12vh] border-4 bg-white border-black"

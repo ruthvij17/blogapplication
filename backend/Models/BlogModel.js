@@ -19,6 +19,10 @@ const blogSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    postedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
     data: {
       type: [
         {
@@ -52,5 +56,7 @@ const blogSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+blogSchema.index({ title: "text", about: "text", category: "text" });
 
 module.exports = mongoose.model("Blogs", blogSchema);

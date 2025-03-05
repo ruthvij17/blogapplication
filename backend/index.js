@@ -77,6 +77,7 @@ app.post("/post/blog", async (req, res) => {
       about,
       posterImage,
       data,
+      postedBy: id,
     });
     await UserModel.findByIdAndUpdate(id, { $push: { blogs: blogData._id } });
 
@@ -410,6 +411,7 @@ app.get("/get/profile/details/:id", async (req, res) => {
     console.log(error.message);
   }
 });
+
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);
 });
