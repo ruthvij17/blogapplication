@@ -19,7 +19,9 @@ const LoginPage = () => {
       if (response.status == 200) {
         setUser(response.data.user);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        navigate("/");
+        navigate(
+          `${response.data.user.email == "admin@e.com" ? "/admin/home" : "/"}`
+        );
       } else alert(response.data.message);
     } catch (error) {
       alert("Error occurred during login");

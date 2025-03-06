@@ -78,7 +78,7 @@ const EditProfileComponent = ({ setIsOpen }) => {
     <div className="fixed p-4 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] bg-black w-[30vw] z-10 text-white rounded-lg">
       <h1 className="text-3xl font-extrabold mb-2">Edit profile</h1>
       <form
-        className="flex flex-col gap-2 max-h-[80vh] overflow-auto"
+        className="flex flex-col gap-2 max-h-[80vh] overflow-auto capitalise "
         id="scrollbar"
       >
         <label>Edit Name</label>
@@ -136,7 +136,7 @@ const EditProfileComponent = ({ setIsOpen }) => {
         {socialLinks.map((ele, index) => {
           return (
             <>
-              <label>{ele.socialName}</label>
+              <label className="capitalize">{ele.socialName}:</label>
               <input
                 type="url"
                 value={ele.url}

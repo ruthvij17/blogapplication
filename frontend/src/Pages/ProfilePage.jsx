@@ -72,7 +72,7 @@ const ProfilePage = () => {
   };
   useEffect(() => {
     getProfileDetails();
-  }, [isOpen]);
+  }, [isOpen, uid]);
 
   useEffect(() => {
     const follow = async () => {

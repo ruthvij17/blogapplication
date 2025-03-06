@@ -48,7 +48,9 @@ app.post("/sign-in", async (req, res) => {
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await UserModel.findOne({ email, password }).select("_id");
+    const user = await UserModel.findOne({ email, password }).select(
+      "_id email name"
+    );
 
     if (!user) {
       return res.status(201).json({
@@ -360,13 +362,16 @@ app.post("/post/profile/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { name, bio, profileImage, socialLinks } = req.body;
+    let userData;
     if (name) {
-      const userData = await UserModel.findByIdAndUpdate(id, { name: name });
+      userData = await UserModel.findByIdAndUpdate(id, {
+        name: name,
+      }).select("profile");
     }
     const data = await UserModel.findByIdAndUpdate(
       id,
       {
-        profile: { bio, profileImage, socialLinks },
+        profile: { ...userData.profile, bio, profileImage, socialLinks },
       },
       { new: true }
     );

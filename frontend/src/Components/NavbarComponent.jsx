@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/V.png";
 import { UserContext } from "../Context/UserContext";
 import { CgProfile } from "react-icons/cg";
+import SearchComponent from "./searchComponent";
 
 const NavbarComponent = () => {
   const { user, setUser } = useContext(UserContext);
@@ -26,13 +26,11 @@ const NavbarComponent = () => {
               blogverse
             </h2>
           </Link>
-
-          <div className="search text-2xl text-gray-500">
-            <FaSearch />
-          </div>
         </div>
+
         {user ? (
           <div className="flex flex-row gap-4 items-center">
+            <SearchComponent />
             <Link to={`/profile/${user._id || JSON.parse(user)._id}`}>
               <CgProfile className="text-4xl " />
             </Link>

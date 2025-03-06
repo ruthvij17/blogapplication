@@ -13,15 +13,6 @@ const HomePage = () => {
   const [suggestedBlogs, setSuggestedBlogs] = useState();
   const [categoryBlogs, setCategoryBlogs] = useState();
   const { user, setUser } = useContext(UserContext);
-  useEffect(() => {
-    const userData = localStorage.getItem("user");
-    try {
-      const parsedData = JSON.parse(userData);
-      setUser(parsedData);
-    } catch (error) {
-      alert("Error parsing JSON:", error);
-    }
-  }, []);
 
   useEffect(() => {
     const getBlogs = async () => {
