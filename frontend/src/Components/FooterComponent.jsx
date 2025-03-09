@@ -106,7 +106,7 @@ const AppFooter = () => {
         ].map((Icon, idx) => (
           <div
             key={idx}
-            className="h-10 w-10 lg:h-12 lg:w-12 rounded-full overflow-hidden flex justify-center items-center hover:text-white"
+            className="h-10 w-10 rounded-full overflow-hidden flex justify-center items-center hover:text-white"
           >
             <Icon />
           </div>

@@ -39,9 +39,9 @@ const ProfilePage = () => {
     pinterest: <FaPinterest />,
   };
 
-  useEffect(() => {
-    console.log(socialLinks);
-  }, [socialLinks]);
+  // useEffect(() => {
+  //   console.log(socialLinks);
+  // }, [socialLinks]);
 
   // posted blogs
   useEffect(() => {
@@ -56,21 +56,22 @@ const ProfilePage = () => {
       }
     };
     getBlogs();
-  }, []);
+  }, [uid]);
 
   // get profile details
-  const getProfileDetails = async () => {
-    try {
-      const response = await axios.get(`/get/profile/details/${uid}`);
-      if (response.data) {
-        setProfile(response.data.profile);
-        setSocialLinks(response.data.profile.socialLinks);
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+
   useEffect(() => {
+    const getProfileDetails = async () => {
+      try {
+        const response = await axios.get(`/get/profile/details/${uid}`);
+        if (response.data) {
+          setProfile(response.data.profile);
+          setSocialLinks(response.data.profile.socialLinks);
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    };
     getProfileDetails();
   }, [isOpen, uid]);
 
@@ -88,7 +89,7 @@ const ProfilePage = () => {
       }
     };
     user && follow();
-  }, []);
+  }, [uid]);
 
   const handleFollow = () => {
     setIsFollowed(!isFollowed);
@@ -101,8 +102,8 @@ const ProfilePage = () => {
         });
 
         if (response.data) {
-          //setProfile(response.data.profile);
-          getProfileDetails();
+          setProfile(response.data.profile);
+          // getProfileDetails();
         } else {
           alert("Something went wrong");
         }

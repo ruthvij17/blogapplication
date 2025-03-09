@@ -5,6 +5,7 @@ import { UserContext } from "../Context/UserContext";
 import { CgProfile } from "react-icons/cg";
 import SearchComponent from "./searchComponent";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import { NavLink } from "react-router-dom";
 
 const NavbarComponent = () => {
   const { user, setUser } = useContext(UserContext);
@@ -30,28 +31,36 @@ const NavbarComponent = () => {
         </div>
         <div className="flex flex-row gap-4 items-center">
           <div className="w-full max-w-md">
-            <TabGroup>
-              <TabList className="flex items-center justify-center gap-4">
-                <Tab
-                  className="rounded-full py-1 px-3 text-sm/6 font-semibold text-white focus:outline-none data-[selected]:bg-white/35 data-[hover]:bg-white/15 data-[selected]:data-[hover]:bg-white/25 data-[focus]:outline-1 data-[focus]:outline-white"
-                  onClick={() => navigate("/admin/home")}
-                >
-                  Home
-                </Tab>
-                <Tab
-                  className="rounded-full py-1 px-3 text-sm/6 font-semibold text-white focus:outline-none data-[selected]:bg-white/35 data-[hover]:bg-white/15 data-[selected]:data-[hover]:bg-white/25 data-[focus]:outline-1 data-[focus]:outline-white"
-                  onClick={() => navigate("/admin/users/details")}
-                >
-                  UserInfo
-                </Tab>
-                <Tab
-                  className="rounded-full py-1 px-3 text-sm/6 font-semibold text-white focus:outline-none data-[selected]:bg-white/35 data-[hover]:bg-white/15 data-[selected]:data-[hover]:bg-white/25 data-[focus]:outline-1 data-[focus]:outline-white"
-                  onClick={() => navigate("/admin/analytics/id")}
-                >
-                  Analytics
-                </Tab>
-              </TabList>
-            </TabGroup>
+            <div className="flex items-center justify-center gap-4 text-sm">
+              <NavLink
+                to="/admin/home"
+                className={({ isActive }) => {
+                  const styles = "hover:bg-white/55 px-3 py-2 rounded-full";
+                  return isActive ? styles + " bg-white/30" : styles + "";
+                }}
+              >
+                Home
+              </NavLink>
+              <NavLink
+                to="/admin/users/details"
+                className={({ isActive }) => {
+                  const styles = "hover:bg-white/55 px-3 py-2 rounded-full";
+                  return isActive ? styles + " bg-white/30" : styles + "";
+                }}
+              >
+                User Info
+              </NavLink>
+              <NavLink
+                to="/admin/analytics/id"
+                className={({ isActive }) => {
+                  const styles =
+                    "hover:bg-white/55 px-3 py-2 rounded-full pointer-events-none";
+                  return isActive ? styles + " bg-white/30" : styles + "";
+                }}
+              >
+                Analytics
+              </NavLink>
+            </div>
           </div>
         </div>
         <div className="flex flex-row gap-4 items-center">

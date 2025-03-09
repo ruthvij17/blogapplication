@@ -51,7 +51,7 @@ const CommentComponent = () => {
     <>
       <div className="m-2 w-[98vw] bg-black text-white rounded-lg p-4">
         <h1 className="font-bold text-2xl mb-2">Comments</h1>
-        <form className="bg-white/15 w-1/2 rounded-lg p-2 flex flex-row justify-between">
+        <form className="bg-white/15 w-1/2 rounded-full p-1 pl-4 flex flex-row justify-between">
           <input
             type="text"
             className="w-[85%] outline-none"
@@ -60,14 +60,14 @@ const CommentComponent = () => {
             placeholder="Add comment"
           />
           <input
-            className="w-[15%] bg-black rounded-lg cursor-pointer p-2 hover:bg-white/30 active:scale-3d"
+            className="w-[15%] bg-black rounded-full cursor-pointer p-2 hover:bg-white/30 active:scale-3d"
             type="submit"
             onClick={(e) => (input == "" ? "" : handleSubmit(e))}
           />
         </form>
         <h1
           onClick={() => setIsOpen(!isOpen)}
-          className="cursor-pointer font-light text-sm my-2 bg-white/15 w-fit p-2 rounded-lg"
+          className="cursor-pointer font-light text-sm my-2 bg-white/15 w-fit p-2 px-3 rounded-full"
         >
           {isOpen ? "Close" : "View"}
         </h1>

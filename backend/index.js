@@ -358,6 +358,7 @@ app.get("/get/comments/:id", async (req, res) => {
   }
 });
 
+// Editing profile
 app.post("/post/profile/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -367,6 +368,8 @@ app.post("/post/profile/:id", async (req, res) => {
       userData = await UserModel.findByIdAndUpdate(id, {
         name: name,
       }).select("profile");
+    } else {
+      res.status(201).json({ message: "Please enter a valid name" });
     }
     const data = await UserModel.findByIdAndUpdate(
       id,
@@ -447,25 +450,25 @@ app.post("/post/follow/user", async (req, res) => {
 
     let followList;
     if (!followed) {
-      followList = await UserModel.findByIdAndUpdate(
+      await UserModel.findByIdAndUpdate(
         followerId,
         { $addToSet: { "profile.following": bloggerId } },
         { new: true }
       );
 
-      await UserModel.findByIdAndUpdate(
+      followList = await UserModel.findByIdAndUpdate(
         bloggerId,
         { $addToSet: { "profile.followers": followerId } },
         { new: true }
       );
     } else {
-      followList = await UserModel.findByIdAndUpdate(
+      await UserModel.findByIdAndUpdate(
         followerId,
         { $pull: { "profile.following": bloggerId } },
         { new: true }
       );
 
-      await UserModel.findByIdAndUpdate(
+      followList = await UserModel.findByIdAndUpdate(
         bloggerId,
         {
           $pull: { "profile.followers": followerId },
