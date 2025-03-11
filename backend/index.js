@@ -491,6 +491,42 @@ app.post("/post/follow/user", async (req, res) => {
   }
 });
 
+app.get("/get/blogs/analytics", async (req, res) => {
+  try {
+    const data = await BlogModel.aggregate([
+      {
+        $group: {
+          _id: "$category", // Group by category (it will be stored in _id by default)
+          totalBlogs: { $sum: 1 }, // Count total blogs per category
+          totalViews: { $sum: "$views" }, // Sum of views per category
+          totalLikes: { $sum: "$likes" }, // Sum of likes per category
+        },
+      },
+      {
+        $project: {
+          category: "$_id", // Rename _id to category
+          totalBlogs: 1, // Keep totalBlogs
+          totalViews: 1, // Keep totalViews
+          totalLikes: 1, // Keep totalLikes
+          _id: 0, // Exclude the _id field
+        },
+      },
+    ]);
+    if (data.length > 0) {
+      res.status(200).json({
+        message: "Category wise blogs",
+        data,
+      });
+    } else {
+      res.status(201).json({
+        message: "Blogs not found",
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);
 });
