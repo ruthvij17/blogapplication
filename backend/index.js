@@ -491,6 +491,7 @@ app.post("/post/follow/user", async (req, res) => {
   }
 });
 
+// category wise analytics
 app.get("/get/blogs/analytics", async (req, res) => {
   try {
     const data = await BlogModel.aggregate([
@@ -522,6 +523,21 @@ app.get("/get/blogs/analytics", async (req, res) => {
         message: "Blogs not found",
       });
     }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+// users wise analytics
+app.get("/get/users/analytics", async (req, res) => {
+  try {
+    const data = await UserModel.find()
+      .select("name email profile blogs")
+      .populate("blogs", "title about posterImage category");
+    res.status(200).json({
+      message: "success",
+      data,
+    });
   } catch (error) {
     console.log(error.message);
   }

@@ -59,7 +59,6 @@ const ProfilePage = () => {
   }, [uid]);
 
   // get profile details
-
   useEffect(() => {
     const getProfileDetails = async () => {
       try {
