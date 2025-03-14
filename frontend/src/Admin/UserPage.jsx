@@ -2,21 +2,37 @@ import React, { useEffect, useState } from "react";
 import AdminLayout from "../Layouts/AdminLayout";
 import axios from "axios";
 import PosterSlider from "../Components/PosterSliderComponent";
+import { MdDelete } from "react-icons/md";
+import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 const UserPage = () => {
   const [users, setUsers] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState();
+
+  const getUsers = async () => {
+    try {
+      const response = await axios.get("/get/users/analytics");
+      if (response) {
+        setUsers(response.data.data);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(`user/${deleteId}`);
+      alert(response.data.message);
+      getUsers();
+    } catch (error) {
+      alert(error.message);
+    }
+    setIsOpen(false);
+  };
 
   useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const response = await axios.get("/get/users/analytics");
-        if (response) {
-          setUsers(response.data.data);
-        }
-      } catch (error) {
-        alert(error.message);
-      }
-    };
     getUsers();
   }, []);
 
@@ -31,9 +47,58 @@ const UserPage = () => {
                 key={index}
               >
                 <div
-                  className="h-full w-[20%] bg-white rounded-lg overflow-x-hidden flex flex-col items-center overflow-auto"
+                  className="h-full w-[20%] p-2 bg-white rounded-lg overflow-x-hidden flex flex-col items-center overflow-auto"
                   id="scrollbar"
                 >
+                  <Button
+                    onClick={() => {
+                      setIsOpen(true);
+                      setDeleteId(user._id);
+                    }}
+                    className="w-full h-3 relative"
+                  >
+                    <MdDelete className="absolute top-1 right-1 text-2xl cursor-pointer text-red-500" />
+                  </Button>
+                  <Dialog
+                    open={isOpen}
+                    as="div"
+                    className="relative z-10 focus:outline-none"
+                    onClose={() => setIsOpen(false)}
+                  >
+                    <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                      <div className="flex min-h-full items-center justify-center p-4">
+                        <DialogPanel
+                          transition
+                          className="w-full max-w-md rounded-xl bg-white/2 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+                        >
+                          <DialogTitle
+                            as="h3"
+                            className="text-base/7 font-medium text-white"
+                          >
+                            Are you sure, do you want to delete?
+                          </DialogTitle>
+                          <p className="mt-2 text-sm/6 text-white/50">
+                            If you click on OK, then this user account will be
+                            permanently deleted.
+                          </p>
+                          <div className="mt-4 flex flex-row gap-2">
+                            <Button
+                              className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                              onClick={() => handleDelete()}
+                            >
+                              OK
+                            </Button>
+                            <Button
+                              className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                              onClick={() => setIsOpen(false)}
+                            >
+                              Cancel
+                            </Button>
+                          </div>
+                        </DialogPanel>
+                      </div>
+                    </div>
+                  </Dialog>
                   <img
                     src={
                       (user && user.profile.profileImage) ||

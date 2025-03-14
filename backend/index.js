@@ -543,6 +543,29 @@ app.get("/get/users/analytics", async (req, res) => {
   }
 });
 
+app.delete("/user/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedUser = await UserModel.findByIdAndDelete(id);
+    const blogs = deletedUser.blogs;
+    blogs.map(async (blog) => {
+      await BlogModel.findByIdAndDelete(blog);
+    });
+    if (deletedUser) {
+      res.status(200).json({
+        message: "User deleted successfully",
+        deletedUser,
+      });
+    } else {
+      res.status(201).json({
+        message: "User not exist",
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);
 });
