@@ -543,6 +543,7 @@ app.get("/get/users/analytics", async (req, res) => {
   }
 });
 
+// Delete User
 app.delete("/user/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -561,6 +562,31 @@ app.delete("/user/:id", async (req, res) => {
         message: "User not exist",
       });
     }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+// Search
+app.get("/search/:query", async (req, res) => {
+  try {
+    const { query } = req.params;
+    const results = await BlogModel.find({
+      $text: { $search: query },
+    })
+      .sort({ score: { $meta: "textScore" } }) // Sort by relevance
+      .select("title category about posterImage views likes"); // Select only needed fields
+
+    if (results)
+      return res.status(200).json({
+        success: true,
+        results,
+      });
+    else
+      return res.status(201).json({
+        success: false,
+        message: "No results for your search",
+      });
   } catch (error) {
     console.log(error.message);
   }
