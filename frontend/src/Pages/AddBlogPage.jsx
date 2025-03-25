@@ -6,8 +6,10 @@ import { BsFillSendFill } from "react-icons/bs";
 import DefaultLayout from "../Layouts/DefaultLayout";
 import axios from "axios";
 import { UserContext } from "../Context/UserContext";
+import { useParams } from "react-router";
 
 const AddBlogPage = () => {
+  const blogId = useParams().id;
   const { user } = useContext(UserContext);
   const id = user._id || JSON.parse(user)._id;
   const [title, setTitle] = useState("");
@@ -16,6 +18,27 @@ const AddBlogPage = () => {
   const [posterImage, setPosterImage] = useState("");
 
   const [inputs, setInputs] = useState([]);
+
+  useEffect(() => {
+    if (blogId != "undefined") {
+      const getBlogDetails = async () => {
+        try {
+          const response = await axios.get(`/get/blog/${blogId}`);
+          if (response.data.blog) {
+            const blog = response.data.blog;
+            setTitle(blog.title);
+            setCategory(blog.category);
+            setAbout(blog.about);
+            setPosterImage(blog.posterImage);
+            setInputs(blog.data);
+          }
+        } catch (error) {
+          alert(error.message);
+        }
+      };
+      getBlogDetails();
+    }
+  }, []);
 
   const addInput = (type) => {
     setInputs([...inputs, { type, content: "" }]);
@@ -36,16 +59,30 @@ const AddBlogPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/post/blog", {
-        id,
-        title,
-        category,
-        about,
-        posterImage,
-        data: inputs,
-      });
-      if (response.status == 200) {
-        alert(response.data.message);
+      if (blogId == "undefined") {
+        const response = await axios.post("/post/blog", {
+          id,
+          title,
+          category,
+          about,
+          posterImage,
+          data: inputs,
+        });
+        if (response.status == 200) {
+          alert(response.data.message);
+        }
+      } else {
+        const response = await axios.post("/update/blog", {
+          id: blogId,
+          title,
+          category,
+          about,
+          posterImage,
+          data: inputs,
+        });
+        if (response.status == 200) {
+          alert(response.data.message);
+        }
       }
     } catch (error) {
       alert(error.message);
@@ -77,6 +114,7 @@ const AddBlogPage = () => {
               className="bg-neutral-900 text-white rounded-md p-2 outline-none"
               required
               onChange={(e) => setCategory(e.target.value)}
+              value={category}
             >
               <option
                 value=""
@@ -186,7 +224,7 @@ const AddBlogPage = () => {
                 className="border-2 border-none rounded-sm px-5 py-3 mt-5 text-xl bg-[rgb(66,63,228)] text-white hover:bg-[rgb(87,86,145)] cursor-pointer active:bg-[rgb(23,22,95)] w-[25%] flex items-center justify-center"
               >
                 <BsFillSendFill />
-                POST BLOG
+                {blogId == "undefined" ? "POST BLOG" : "UPDATE BLOG"}
               </button>
             </center>
           </form>

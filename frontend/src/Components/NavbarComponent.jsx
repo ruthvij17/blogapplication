@@ -34,7 +34,7 @@ const NavbarComponent = () => {
             <Link to={`/profile/${user._id || JSON.parse(user)._id}`}>
               <CgProfile className="text-4xl " />
             </Link>
-            <Link to="/add/blog">
+            <Link to={`/add/blog/undefined`}>
               <div className="rounded-lg border-[1px] border-amber-50 p-3 hover:bg-[rgba(240,240,240,0.6)] active:bg-black">
                 Add blog
               </div>

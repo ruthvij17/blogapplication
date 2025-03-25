@@ -46,7 +46,7 @@ function App() {
       <Route path="/signin" element={<SigninPage />}></Route>
       <Route path="/blog/:id" element={<BlogPage />}></Route>
       <Route
-        path="/add/blog"
+        path="/add/blog/:id"
         element={user ? <AddBlogPage /> : <LoginPage />}
       ></Route>
       <Route

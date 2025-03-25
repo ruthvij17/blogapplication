@@ -92,6 +92,30 @@ app.post("/post/blog", async (req, res) => {
   }
 });
 
+app.post("/update/blog", async (req, res) => {
+  try {
+    const { id, title, category, about, posterImage, data } = req.body;
+
+    const blogData = await BlogModel.findByIdAndUpdate(
+      id,
+      {
+        title,
+        category,
+        about,
+        posterImage,
+        data,
+      },
+      { new: true }
+    );
+    res.status(200).json({
+      message: "Blog updated successfully",
+      blogData,
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 // Get all blogs
 app.get("/get/trending/blogs", async (req, res) => {
   try {
@@ -295,7 +319,10 @@ app.get("/get/posted/blogs/:id", async (req, res) => {
     const { id } = req.params;
     const data = await UserModel.findById(id)
       .select("blogs")
-      .populate("blogs", "title category about posterImage views likes");
+      .populate(
+        "blogs",
+        "title category about posterImage views likes postedBy"
+      );
     if (data) {
       res.status(200).json({
         message: "List of posted blogs",
