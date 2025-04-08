@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import Poster from "./PosterComponent";
 import { NextArrow, PrevArrow } from "./ArrowsComponent";
 const PosterSlider = (props) => {
-  const { blogs, isDark } = props;
+  const { blogs, isDark, getPostedBlogs } = props;
 
   const settings = {
     infinite: false,
@@ -43,7 +43,12 @@ const PosterSlider = (props) => {
       <Slider {...settings}>
         {blogs &&
           blogs.map((each, index) => (
-            <Poster {...each} isDark={isDark} key={index} />
+            <Poster
+              {...each}
+              isDark={isDark}
+              key={index}
+              getPostedBlogs={getPostedBlogs}
+            />
           ))}
       </Slider>
     </>

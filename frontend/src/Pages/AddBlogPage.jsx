@@ -6,10 +6,11 @@ import { BsFillSendFill } from "react-icons/bs";
 import DefaultLayout from "../Layouts/DefaultLayout";
 import axios from "axios";
 import { UserContext } from "../Context/UserContext";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 const AddBlogPage = () => {
   const blogId = useParams().id;
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const id = user._id || JSON.parse(user)._id;
   const [title, setTitle] = useState("");
@@ -84,6 +85,7 @@ const AddBlogPage = () => {
           alert(response.data.message);
         }
       }
+      navigate("/");
     } catch (error) {
       alert(error.message);
     }

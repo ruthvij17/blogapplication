@@ -44,18 +44,18 @@ const ProfilePage = () => {
   // }, [socialLinks]);
 
   // posted blogs
-  useEffect(() => {
-    const getBlogs = async () => {
-      try {
-        const response = await axios.get(`/get/posted/blogs/${uid}`);
-        if (response) {
-          setPostedBlogs(response.data.postedBlogs);
-        }
-      } catch (error) {
-        alert(error.message);
+  const getPostedBlogs = async () => {
+    try {
+      const response = await axios.get(`/get/posted/blogs/${uid}`);
+      if (response) {
+        setPostedBlogs(response.data.postedBlogs);
       }
-    };
-    getBlogs();
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  useEffect(() => {
+    getPostedBlogs();
   }, [uid]);
 
   // get profile details
@@ -209,7 +209,11 @@ const ProfilePage = () => {
             <h3 className={`text-2xl font-bold text-black`}>Posted Blogs</h3>
             <p className={`text-sm text-black`}>Blogs that are posted by you</p>
           </div>
-          <PosterSlider blogs={postedBlogs} isDark={false} />
+          <PosterSlider
+            blogs={postedBlogs}
+            isDark={false}
+            getPostedBlogs={getPostedBlogs}
+          />
         </div>
       </div>
     </>

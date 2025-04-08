@@ -14,7 +14,6 @@ const CommentComponent = () => {
 
   const getComments = async () => {
     try {
-      //console.log("HIII");
       const response = await axios.get(`/get/comments/${id}`);
       if (response.data) {
         setComments(response.data.comments);

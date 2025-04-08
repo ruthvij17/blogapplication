@@ -619,6 +619,27 @@ app.get("/search/:query", async (req, res) => {
   }
 });
 
+app.delete("/delete/blog/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const response = await BlogModel.findByIdAndDelete(id);
+    if (response) {
+      const response1 = await UserModel.findByIdAndUpdate(response.postedBy, {
+        $pull: { blogs: response._id },
+      });
+      return res.status(200).json({
+        message: "Blog deleted successfully",
+      });
+    } else {
+      return res.status(201).json({
+        message: "Blog is not deleted",
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);
 });
