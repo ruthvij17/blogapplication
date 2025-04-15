@@ -59,20 +59,23 @@ const ProfilePage = () => {
   }, [uid]);
 
   // get profile details
-  useEffect(() => {
-    const getProfileDetails = async () => {
-      try {
-        const response = await axios.get(`/get/profile/details/${uid}`);
-        if (response.data) {
-          setProfile(response.data.profile);
-          setSocialLinks(response.data.profile.socialLinks);
-        }
-      } catch (error) {
-        alert(error.message);
+  const getProfileDetails = async () => {
+    try {
+      const response = await axios.get(`/get/profile/details/${uid}`);
+      if (response.data) {
+        setProfile(response.data.profile);
+        setSocialLinks(response.data.profile.socialLinks);
       }
-    };
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  useEffect(() => {
     getProfileDetails();
   }, [isOpen, uid]);
+
+  console.log(profile && profile.blogs.length);
 
   useEffect(() => {
     const follow = async () => {
@@ -170,7 +173,7 @@ const ProfilePage = () => {
             </div>
             <div className="flex flex-row gap-3 mt-2 items-center justify-center">
               <div className="flex flex-col items-center border-1 w-23 border-gray-400 px-4 py-1 rounded-lg">
-                <p className="font-bold">{profile && profile.blogs}</p>
+                <p className="font-bold">{profile && profile.blogs.length}</p>
                 <p className="text-xs">Blogs</p>
               </div>
               <div className="flex flex-col items-center border-1 w-23 border-gray-400 px-4 py-1 rounded-lg">

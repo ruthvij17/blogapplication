@@ -441,7 +441,7 @@ app.get("/get/profile/details/:id", async (req, res) => {
           ...data.profile,
           name: data.name,
           email: data.email,
-          blogs: data.blogs.length,
+          blogs: data.blogs,
         },
       });
     } else {
@@ -623,10 +623,10 @@ app.delete("/delete/blog/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const response = await BlogModel.findByIdAndDelete(id);
-    if (response) {
-      const response1 = await UserModel.findByIdAndUpdate(response.postedBy, {
-        $pull: { blogs: response._id },
-      });
+    const response1 = await UserModel.findByIdAndUpdate(response.postedBy, {
+      $pull: { blogs: response._id },
+    });
+    if (response && response1) {
       return res.status(200).json({
         message: "Blog deleted successfully",
       });
