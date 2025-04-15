@@ -9,6 +9,7 @@ import axios from "axios";
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 const Poster = (props) => {
+  const AEMAIL = import.meta.env.VITE_AEMAIL;
   const { user } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const id = props.postedBy;
@@ -36,7 +37,7 @@ const Poster = (props) => {
         props.isDark ? "bg-white/20" : "bg-black/15"
       }`}
     >
-      {user && user._id == id ? (
+      {(user && user._id == id) || user.email == AEMAIL ? (
         <div className="w-full flex flex-row items-center sticky right-1 bottom-1 justify-end gap-2 text-lg">
           <Link to={`/add/blog/${props._id}`}>
             <GrEdit className="text-blue-700 cursor-pointer" />

@@ -137,24 +137,15 @@ const UserPage = () => {
                         <p className="text-xs">Following</p>
                       </div>
                     </div>
-                    {/* <div className="flex justify-center text-gray-500 text-3xl lg:text-5xl my-6 gap-4">
-                      {socialLinks &&
-                        socialLinks.map(
-                          (item, idx) =>
-                            item.url && (
-                              <Link key={idx} to={item.url}>
-                                <div className="h-10 w-10 lg:h-8 lg:w-8 rounded-full overflow-hidden flex justify-center items-center hover:text-white">
-                                  {socialMediaLinks[item.socialName]}
-                                </div>
-                              </Link>
-                            )
-                        )}
-                    </div> */}
                   </div>
                 </div>
 
                 <div className="h-full w-[80%]">
-                  <PosterSlider blogs={user.blogs} isDark={false} />
+                  <PosterSlider
+                    blogs={user.blogs}
+                    isDark={false}
+                    getPostedBlogs={getUsers}
+                  />
                 </div>
               </div>
             );

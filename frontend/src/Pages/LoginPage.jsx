@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 
 const LoginPage = () => {
+  const AEMAIL = import.meta.env.VITE_AEMAIL;
+  console.log(AEMAIL);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -19,9 +21,7 @@ const LoginPage = () => {
       if (response.status == 200) {
         setUser(response.data.user);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        navigate(
-          `${response.data.user.email == "admin@e.com" ? "/admin/home" : "/"}`
-        );
+        navigate(`${response.data.user.email == AEMAIL ? "/admin/home" : "/"}`);
       } else alert(response.data.message);
     } catch (error) {
       alert("Error occurred during login");

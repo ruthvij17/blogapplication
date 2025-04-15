@@ -137,10 +137,18 @@ app.get("/get/suggested/blogs", async (req, res) => {
     const blogs = await BlogModel.find().select(
       "title category about posterImage views likes"
     );
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1)); // Pick random index
+        [array[i], array[j]] = [array[j], array[i]]; // Swap
+      }
+      return array;
+    }
+
     res.status(200).json({
       success: true,
       message: "Blogs found",
-      blogs: blogs.reverse(),
+      blogs: shuffleArray(blogs),
     });
   } catch (error) {
     console.log(error.message);
@@ -560,7 +568,7 @@ app.get("/get/users/analytics", async (req, res) => {
   try {
     const data = await UserModel.find()
       .select("name email profile blogs")
-      .populate("blogs", "title about posterImage category");
+      .populate("blogs", "title about posterImage category views likes");
     res.status(200).json({
       message: "success",
       data,
@@ -575,7 +583,8 @@ app.delete("/user/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const deletedUser = await UserModel.findByIdAndDelete(id);
-    const blogs = deletedUser.blogs;
+    const blogs = await deletedUser.blogs;
+    const comments = await CommentModel.deleteMany({ commentedUser: id });
     blogs.map(async (blog) => {
       await BlogModel.findByIdAndDelete(blog);
     });
