@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/V.png";
 import { UserContext } from "../Context/UserContext";
 import { CgProfile } from "react-icons/cg";
-import SearchComponent from "./searchComponent";
+import SearchComponent from "./SearchComponent";
 
 const NavbarComponent = () => {
   const { user, setUser } = useContext(UserContext);
