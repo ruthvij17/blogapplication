@@ -19,7 +19,7 @@ import UserPage from "./Admin/UserPage";
 
 import AccessDeniedPage from "./Pages/AccessDeniedPage";
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "https://blogapplication-backend-gi3g.onrender.com";
 
 function App() {
   // const [loggedInUser, setLoggedInUser] = useState();
