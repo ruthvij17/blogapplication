@@ -93,10 +93,13 @@ const AddBlogPage = () => {
 
   return (
     <>
-      <div className="flex flex-row min-h-screen w-screen items-center justify-between bg-white text-white p-3">
-        <div className="p-5 rounded-xl bg-black w-[85%]">
+      <div className="flex flex-row min-h-screen w-screen items-center justify-between bg-white text-white pl-2">
+        <div className="p-5 rounded-lg bg-black w-[86%]">
           <form className="flex flex-col gap-2 min-h-[95vh]">
-            <h2 class="text-transparent bg-clip-text bg-gradient-to-t uppercase text-shadow-white from-black to-white text-2xl font-semibold text-center">
+            <h2
+              class="uppercase text-2xl font-semibold text-center"
+              style={{ "font-family": "Orbitron" }}
+            >
               add your blog
             </h2>
             <label htmlFor="title">Title:</label>
@@ -231,7 +234,7 @@ const AddBlogPage = () => {
             </center>
           </form>
         </div>
-        <div className="border-[rgb(60,60,228)] border-2 sticky right-3 bottom-0 top-0 bg-black flex flex-col p-2 w-[10%] h-[95vh] justify-around rounded-xl">
+        <div className="sticky right-0 top-0 bg-black flex flex-col p-2 w-[12.5%] h-[60vh] justify-around rounded-lg">
           <button
             onClick={() => addInput("text")}
             className="cursor-pointer border-2 border-[rgb(60,60,228)] rounded-sm active:bg-[rgb(60,60,228)] flex items-center justify-center"

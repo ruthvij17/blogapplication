@@ -518,7 +518,7 @@ app.post("/post/follow/user", async (req, res) => {
         ...followList.profile,
         name: followList.name,
         email: followList.email,
-        blogs: followList.blogs.length,
+        blogs: followList.blogs,
       },
     });
   } catch (error) {

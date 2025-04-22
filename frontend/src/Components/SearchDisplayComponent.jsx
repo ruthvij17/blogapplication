@@ -5,7 +5,7 @@ const SearchDisplayComponent = ({ blogs, isHidden, setIsHidden }) => {
   return (
     <>
       <div
-        className={`bg-gray-500 w-[98vw] left-2 absolute top-[85px] z-10 rounded-lg p-2 ${
+        className={`bg-gray-500 w-[98vw] left-2 absolute top-[85px] z-50 rounded-lg p-2 ${
           isHidden ? "hidden" : ""
         }`}
       >

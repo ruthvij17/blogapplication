@@ -22,7 +22,10 @@ const NavbarComponent = () => {
             <img src={logo} alt="logo" className="w-20 h-20" />
           </Link>
           <Link to="/">
-            <h2 class="text-transparent bg-clip-text bg-gradient-to-t uppercase text-shadow-white from-black to-white text-3xl font-extrabold">
+            <h2
+              className="uppercase text-white text-3xl font-extrabold"
+              style={{ "font-family": "Orbitron" }}
+            >
               blogverse
             </h2>
           </Link>
