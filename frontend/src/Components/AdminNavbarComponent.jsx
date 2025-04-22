@@ -2,14 +2,10 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/V.png";
 import { UserContext } from "../Context/UserContext";
-import { CgProfile } from "react-icons/cg";
-import SearchComponent from "./searchComponent";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
 
 const NavbarComponent = () => {
-  const { user, setUser } = useContext(UserContext);
-  const [selected, setSelected] = useState();
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const handleLogout = () => {
     setUser("");
