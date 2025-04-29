@@ -19,10 +19,16 @@ import UserPage from "./Admin/UserPage";
 
 import AccessDeniedPage from "./Pages/AccessDeniedPage";
 
-axios.defaults.baseURL = "https://blog-app-backend-ykmz.onrender.com";
+axios.defaults.baseURL = "https://blogapplication-backend-gi3g.onrender.com";
 
 function App() {
+  z;
+  // const [loggedInUser, setLoggedInUser] = useState();
   const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
