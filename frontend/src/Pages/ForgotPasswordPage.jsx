@@ -10,7 +10,6 @@ const ForgotPasswordPage = () => {
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
-    alert("hello");
     e.preventDefault();
     if (password !== cpassword) {
       alert("Password must be same");
