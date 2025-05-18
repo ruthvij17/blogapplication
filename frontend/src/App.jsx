@@ -20,7 +20,7 @@ import UserPage from "./Admin/UserPage";
 import AccessDeniedPage from "./Pages/AccessDeniedPage";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "https://blogapplication-backend-gi3g.onrender.com";
 // https://blogapplication-backend-gi3g.onrender.com
 
 function App() {
