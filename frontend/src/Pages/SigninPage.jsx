@@ -44,7 +44,10 @@ const SigninPage = () => {
   return (
     <>
       <div className="flex h-screen w-screen items-center justify-center bg-black text-white">
-        <div className="border-2 border-[rgb(66,63,228)] p-10 px-20 rounded-xl bg-black">
+        <div
+          className="border-2 border-[rgb(66,63,228)] p-10 px-20 rounded-xl bg-black max-h-[95vh] overflow-auto"
+          id="scrollbar"
+        >
           <h1 className="font-semibold text-[rgb(66,63,228)] mb-3 text-center text-2xl">
             Sign-up
           </h1>
