@@ -17,7 +17,14 @@ import axios from "axios";
 const AdminHomePage = () => {
   const [analyticsData, setAnalyticsData] = useState();
 
-  const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#d0ed57"];
+  const COLORS = [
+    "#8884d8",
+    "#82ca9d",
+    "#ffc658",
+    "#ff8042",
+    "#d0ed57",
+    "#5f5ff0",
+  ];
 
   useEffect(() => {
     const getAnalyticsData = async () => {

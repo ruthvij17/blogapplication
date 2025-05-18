@@ -258,7 +258,7 @@ const BlogPage = () => {
             <img
               src={postedBy && postedBy.profile.profileImage}
               alt="Profile"
-              className="w-[15%] p-2"
+              className="w-[20%] p-2 rounded-full"
             />
             <div className="">
               <h1 className="text-black font-semibold text-xl font-serif">

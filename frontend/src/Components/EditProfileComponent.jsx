@@ -60,6 +60,10 @@ const EditProfileComponent = ({ setIsOpen }) => {
   }, []);
 
   const handleSubmit = async () => {
+    if (!name) {
+      alert("Please enter the name");
+      return;
+    }
     try {
       const response = await axios.post(`/post/profile/${id}`, {
         name,

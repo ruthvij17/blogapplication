@@ -66,7 +66,10 @@ const LoginPage = () => {
             <button className="border-2 border-none rounded-full px-5 py-3 mt-5 text-xl bg-[rgb(66,63,228)] text-white hover:bg-[rgb(87,86,145)] active:bg-[rgb(23,22,95)]">
               Login
             </button>
-            <div className="mt-3">
+            <div className="mt-3 flex items-center flex-col">
+              <Link className="text-[rgb(66,63,228)]" to="/forgotpassword">
+                Forgot Password?
+              </Link>
               <p className="text-white">
                 Don't have an account?
                 <span className="text-[rgb(66,63,228)]">

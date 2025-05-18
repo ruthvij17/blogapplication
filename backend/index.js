@@ -6,6 +6,70 @@ const cors = require("cors");
 const UserModel = require("./Models/UserModel");
 const BlogModel = require("./Models/BlogModel");
 const CommentModel = require("./Models/CommentModel");
+require("dotenv").config();
+const nodemailer = require("nodemailer");
+
+// Function to generate OTP
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+// In-memory OTP store (for demo purposes)
+const otpStore = new Map();
+
+// Configure nodemailer
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+// Function to send OTP via email
+function sendOTP(email) {
+  const otp = generateOTP();
+  const expiry = Date.now() + 5 * 60 * 1000; // 5 minutes from now
+  otpStore.set(email, { otp, expiry });
+
+  const mailOptions = {
+    from: '"Blogverse" <no-reply@gmail.com>',
+    to: email,
+    subject: "Your OTP Code",
+    text: `Your OTP is: ${otp}. It is valid for 5 minutes. Please do not share your OTP with anyone.`,
+  };
+
+  return new Promise((resolve, reject) => {
+    try {
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log("Error sending email:", error);
+          return reject(false);
+        }
+        console.log("Email sent: " + info.response);
+        return resolve(true);
+      });
+    } catch (error) {
+      return reject(false);
+    }
+  });
+}
+
+// Function to verify OTP
+function verifyOTP(email, inputOtp) {
+  const record = otpStore.get(email);
+  if (!record) return false;
+  const { otp, expiry } = record;
+  if (Date.now() > expiry) {
+    otpStore.delete(email); // Remove expired OTP
+    return false;
+  }
+  if (otp === inputOtp) {
+    otpStore.delete(email); // Invalidate OTP after successful verification
+    return true;
+  }
+  return false;
+}
 
 dbConnection();
 const PORT = process.env.PORT || 3000;
@@ -21,24 +85,61 @@ app.get("/", (req, res) => {
   }
 });
 
+// register
+app.post("/getotp", async (req, res) => {
+  try {
+    const { email, login } = req.body;
+    if (email) {
+      const users = await UserModel.findOne({ email });
+      if (!login && users) {
+        return res.status(201).json({
+          success: false,
+          message: "User already exist",
+        });
+      }
+      if (login && !users) {
+        return res.status(201).json({
+          success: false,
+          message: "User doesn't exist. Please register.",
+        });
+      }
+      const result = await sendOTP(email);
+      if (result) {
+        return res
+          .status(200)
+          .json({ success: true, message: "OTP has been sent to your email" });
+      } else {
+        return res
+          .status(201)
+          .json({ success: false, message: "Failed to send OTP" });
+      }
+    } else {
+      return res
+        .status(201)
+        .json({ success: false, message: "Please enter the proper email" });
+    }
+  } catch (error) {
+    return res.status(201).json({ success: false, message: error.message });
+  }
+});
+
 // Sign-in
 app.post("/sign-in", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    const users = await UserModel.findOne({ email });
-    if (users) {
+    const { name, email, password, otp } = req.body;
+    if (verifyOTP(email, otp)) {
+      await UserModel.create({ name, email, password });
+
+      return res.status(200).json({
+        success: true,
+        message: "User added successfully please log in to continue",
+      });
+    } else {
       return res.status(201).json({
         success: false,
-        message: "User already exist",
+        message: "Wrong OTP",
       });
     }
-
-    await UserModel.create({ name, email, password });
-
-    return res.status(200).json({
-      success: true,
-      message: "User added successfully please log in to continue",
-    });
   } catch (error) {
     console.log(error.message);
   }
@@ -63,6 +164,37 @@ app.post("/login", async (req, res) => {
       message: "User found",
       user,
     });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+// Forgot Password
+app.post("/forgotpassword", async (req, res) => {
+  try {
+    const { email, password, otp } = req.body;
+    if (verifyOTP(email, otp)) {
+      const result = await UserModel.updateOne(
+        { email: email }, // filter
+        { $set: { password: password } } // update
+      );
+      if (result) {
+        return res.status(200).json({
+          success: false,
+          message: "Password changed successfully",
+        });
+      } else {
+        return res.status(201).json({
+          success: false,
+          message: "Failed to change password",
+        });
+      }
+    } else {
+      return res.status(201).json({
+        success: false,
+        message: "Wrong OTP",
+      });
+    }
   } catch (error) {
     console.log(error.message);
   }
@@ -566,7 +698,7 @@ app.get("/get/blogs/analytics", async (req, res) => {
 // users wise analytics
 app.get("/get/users/analytics", async (req, res) => {
   try {
-    const data = await UserModel.find()
+    const data = await UserModel.find({ email: { $ne: "admin@e.com" } })
       .select("name email profile blogs")
       .populate("blogs", "title about posterImage category views likes");
     res.status(200).json({

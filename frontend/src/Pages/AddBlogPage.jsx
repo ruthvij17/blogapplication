@@ -95,7 +95,12 @@ const AddBlogPage = () => {
     <>
       <div className="flex flex-row min-h-screen w-screen items-center justify-between bg-white text-white pl-2">
         <div className="p-5 rounded-lg bg-black w-[86%]">
-          <form className="flex flex-col gap-2 min-h-[95vh]">
+          <form
+            className="flex flex-col gap-2 min-h-[95vh]"
+            onSubmit={(e) => {
+              handleSubmit(e);
+            }}
+          >
             <h2
               class="uppercase text-2xl font-semibold text-center"
               style={{ "font-family": "Orbitron" }}
@@ -222,9 +227,6 @@ const AddBlogPage = () => {
               })}
             <center>
               <button
-                onClick={(e) => {
-                  handleSubmit(e);
-                }}
                 type="submit"
                 className="border-2 border-none rounded-sm px-5 py-3 mt-5 text-xl bg-[rgb(66,63,228)] text-white hover:bg-[rgb(87,86,145)] cursor-pointer active:bg-[rgb(23,22,95)] w-[25%] flex items-center justify-center"
               >
@@ -234,6 +236,7 @@ const AddBlogPage = () => {
             </center>
           </form>
         </div>
+
         <div className="sticky right-0 top-0 bg-black flex flex-col p-2 w-[12.5%] h-[60vh] justify-around rounded-lg">
           <button
             onClick={() => addInput("text")}

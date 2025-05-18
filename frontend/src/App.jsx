@@ -18,8 +18,10 @@ import AnalyticsPage from "./Admin/AnalyticsPage";
 import UserPage from "./Admin/UserPage";
 
 import AccessDeniedPage from "./Pages/AccessDeniedPage";
+import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 
-axios.defaults.baseURL = "https://blogapplication-backend-gi3g.onrender.com";
+axios.defaults.baseURL = "http://localhost:5000";
+// https://blogapplication-backend-gi3g.onrender.com
 
 function App() {
   const { user, setUser } = useContext(UserContext);
@@ -38,6 +40,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
+      <Route path="/forgotpassword" element={<ForgotPasswordPage />}></Route>
       <Route path="/signin" element={<SigninPage />}></Route>
       <Route path="/blog/:id" element={<BlogPage />}></Route>
       <Route

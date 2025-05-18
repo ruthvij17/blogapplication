@@ -58,7 +58,7 @@ const NavbarComponent = () => {
             </Link>
             <Link to="/signin">
               <div className="rounded-lg border-[1px] border-amber-50 p-3 hover:bg-[rgba(240,240,240,0.6)] active:bg-black">
-                Sign-in
+                Sign-up
               </div>
             </Link>
           </div>

@@ -2,15 +2,15 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const SigninPage = () => {
+const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
   const [cpassword, setCpassword] = useState("");
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
+    alert("hello");
     e.preventDefault();
     if (password !== cpassword) {
       alert("Password must be same");
@@ -18,10 +18,9 @@ const SigninPage = () => {
     }
 
     try {
-      const response = await axios.post("/sign-in", {
+      const response = await axios.post("/forgotpassword", {
         email,
         password,
-        name,
         otp,
       });
       if (response.status == 200) {
@@ -37,16 +36,16 @@ const SigninPage = () => {
 
     setEmail("");
     setPassword("");
-    setName("");
     setCpassword("");
+    setOtp("");
   };
 
   return (
     <>
       <div className="flex h-screen w-screen items-center justify-center bg-black text-white">
-        <div className="border-2 border-[rgb(66,63,228)] p-10 px-20 rounded-xl bg-black">
+        <div className="border-2 border-[rgb(66,63,228)] p-20 rounded-xl bg-black">
           <h1 className="font-semibold text-[rgb(66,63,228)] mb-3 text-center text-2xl">
-            Sign-up
+            Change Password
           </h1>
           <form
             onSubmit={(e) => {
@@ -54,16 +53,6 @@ const SigninPage = () => {
             }}
             className="flex flex-col items-center justify-center"
           >
-            <input
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-              required
-              type="text"
-              placeholder="Enter your name"
-              className="border-2 border-[rgb(66,63,228)] rounded-full mt-5 px-5 py-3 text-xl outline-none bg-transparent placeholder:text-gray-400"
-            />
             <input
               value={email}
               onChange={(e) => {
@@ -81,12 +70,12 @@ const SigninPage = () => {
                 onClick={async () => {
                   try {
                     if (!email) {
-                      alert("PLease enter a valid email");
+                      alert("Please enter a valid email");
                       return;
                     }
                     const response = await axios.post("/getotp", {
                       email,
-                      login: false,
+                      login: true,
                     });
                     if (response) {
                       alert(response.data.message);
@@ -131,23 +120,17 @@ const SigninPage = () => {
               className="border-2 border-[rgb(66,63,228)] rounded-full mt-5 px-5 py-3 text-xl outline-none bg-transparent placeholder:text-gray-400"
             />
 
-            <button className="border-2 border-none rounded-full px-5 py-3 mt-5 text-xl bg-[rgb(66,63,228)] text-white hover:bg-[rgb(87,86,145)] active:bg-[rgb(23,22,95)]">
-              Register
+            <button
+              type="submit"
+              className="border-2 border-none rounded-full px-4 py-3 mt-5 text-lg bg-[rgb(66,63,228)] text-white hover:bg-[rgb(87,86,145)] active:bg-[rgb(23,22,95)]"
+            >
+              Change Password
             </button>
-            <div className="mt-3">
-              <p className="text-white">
-                Already have an account?
-                <span className="text-[rgb(66,63,228)]">
-                  <Link to="/login">log-in</Link>
-                </span>
-              </p>
-            </div>
           </form>
         </div>
-         
       </div>
     </>
   );
 };
 
-export default SigninPage;
+export default ForgotPasswordPage;
