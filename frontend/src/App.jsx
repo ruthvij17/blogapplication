@@ -20,7 +20,8 @@ import UserPage from "./Admin/UserPage";
 import AccessDeniedPage from "./Pages/AccessDeniedPage";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 
-axios.defaults.baseURL = "https://blogapplication-backend-gi3g.onrender.com";
+axios.defaults.baseURL = "https://blog-app-backend-qy7q.onrender.com";
+// https://blog-app-backend-qy7q.onrender.com
 // https://blogapplication-backend-gi3g.onrender.com
 
 function App() {
